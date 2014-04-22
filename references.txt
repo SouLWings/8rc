@@ -1,0 +1,7 @@
+http://gregfranko.com/jquery.selectBoxIt.js/ - improved bootstrap selectbox
+http://charliepark.org/bootstrap_buttons/ - button styler
+http://www.css3factory.com/linear-gradients/  - linear gradient
+http://bootswatch.com/cerulean/ - bootstrap theme
+
+
+http://alexgorbatchev.com/SyntaxHighlighter/hosting.html - java highlihter
