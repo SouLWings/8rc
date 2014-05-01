@@ -5,3 +5,34 @@ http://bootswatch.com/cerulean/ - bootstrap theme
 
 
 http://alexgorbatchev.com/SyntaxHighlighter/hosting.html - java highlihter
+
+fyp journal
+http://www.sciencedirect.com/science/article/pii/S0360835213000132
+http://www.sciencedirect.com/science/article/pii/S1877042813012718
+http://www.sciencedirect.com/science/article/pii/S187704281402134X
+http://www.sciencedirect.com/science/article/pii/S0268401205000198	
+
+
+bootstrap sample
+http://themes.startbootstrap.com/flex-admin-v1.2/flot.html
+http://wrapbootstrap.com/preview/WB0B30DGR
+http://demo.okendoken.com/2.0/
+http://themeforest.net/item/clipone-bootstrap-3-responsive-admin-template/full_screen_preview/5881143
+http://bootstrap-calendar.azurewebsites.net/index-bs3.html
+
+bootstrap addons
+http://goodybag.github.io/bootstrap-notify/
+http://www.jquery4u.com/bootstraps/10-twitter-bootstrap-3-jquery-plugins/
+
+
+halstead site
+http://www.virtualmachinery.com/sidebar2.htm
+http://www.verifysoft.com/en_halstead_metrics.html
+
+php autoloader
+http://www.sitepoint.com/autoloading-and-the-psr-0-standard/
+
+php QR generator
+http://www.sitepoint.com/generate-qr-codes-in-php/
+
+

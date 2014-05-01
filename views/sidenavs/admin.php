@@ -3,7 +3,6 @@
 		<header>General</header>
 		<ul class="nav nav-sidebar">
 			<li class="active"><a href="#">College Wall</a></li>
-			<li><a href="#">Calender</a></li>
 		</ul>
 		<header>Management</header>
 		<ul class="nav nav-sidebar">

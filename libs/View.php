@@ -32,17 +32,20 @@ class View {
 		}
 		else{
 			$this->topnavPath = 'topmenus/signinmenu';
-			$this->modalformPath[] = 'modals/signin_modalform';
+			$this->modalformPath[] = 'signin_modalform';
 			$this->contentframePath = 'contentframes/fullpageframe';
 		}
 		
 		$this->js[] = 'jquery-1.11.0.min';
 		$this->js[] = 'bootstrap.min';
+		$this->js[] = 'responsive-calendar.min';//http://w3widgets.com/responsive-calendar/
 		$this->css[] = 'bootstrap.min';
 		$this->css[] = 'bootstrap-theme.min';
 		$this->css[] = 'font-awesome.min';
 		$this->css[] = 'font-fsecure';
 		$this->css[] = 'base';
+		$this->css[] = 'SimpleCalendar';
+		$this->css[] = 'responsive-calendar';
 	}
 	
 	public function render($page, $fullpage = false)
@@ -55,7 +58,7 @@ class View {
 		$this->content = $this->getOutputbuffer($page . '_view');
 		$this->contentframe = $this->getOutputbuffer($this->contentframePath);
 		foreach($this->modalformPath as $modal)
-			$this->modalforms .= $this->getOutputbuffer($modal);
+			$this->modalforms .= $this->getOutputbuffer('modals/'.$modal);
 		require 'views/templates/layout.php';  
 	}
 	

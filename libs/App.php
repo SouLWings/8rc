@@ -15,6 +15,7 @@ class App{
      */
     public function init()
     {
+		date_default_timezone_set("Singapore");
         // Sets the protected $_url
         $this->_getUrl();
 
@@ -86,7 +87,7 @@ class App{
         // Make sure the method we are calling exists
         if ($length > 1) {
             if (!method_exists($this->_controller, $this->_url[1])) {
-                $this->_error();
+                header('Location: '.URL.'error');
             }
         }
         

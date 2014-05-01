@@ -7,7 +7,7 @@ class Controller {
 	
     function __construct($model = 'Base') {
 		session_start();
-		$this->curr_location = $_SERVER['SCRIPT_NAME'];
+		$this->curr_location = $_SERVER['REQUEST_URI'];
 
 		if(isset($_SERVER['HTTP_REFERER']))
 			$this->referer = $_SERVER['HTTP_REFERER'];
@@ -60,6 +60,21 @@ class Controller {
 		return $lastvisitedmsg;
 	}
 
+	public function has_privilege($level, $orless = false)
+	{
+		if($this->is_logged_in())
+		{
+			$ul = $_SESSION['user']['privilege'];
+			if($orless && $ul <= $level || $ul = $level)
+				return true;
+			else 
+				return false;		
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 	public function require_privilege($level, $orless = false)
 	{
@@ -73,10 +88,35 @@ class Controller {
 		}
 		else
 		{
-			$this->view->title = '401 Access Denied';
-			$this->view->render('error401');
+			header('Location: '.URL.'error/e401');
+		}
+	}
+
+	public function validate_param($param)
+	{
+		$params = explode(',',$params);
+		$paramarray = array();
+		$invalid = '';
+		foreach($params as $p)
+			if($paramarray[] = $this->param(trim($p, ' ')))
+				$invalid .= $p.' ';
+
+		if($invalid!='')
+		{
+			echo json_encode(array('status' => 'failed', 'msg' => "Invalid parameters: $invalid"));
 			die();
 		}
-	}	
-
+		
+		return $paramarray;
+	}
+	
+	public function param($p)
+	{
+		if(isset($_POST[$p]) && $_POST[$p] != '')
+			return $_POST[$p];
+		else if(isset($_GET[$p]) && $_GET[$p] != '')
+			return $_GET[$p];
+		else
+			return false;
+	}
 }

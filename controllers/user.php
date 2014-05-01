@@ -7,8 +7,21 @@ class User extends Controller {
     }
     
     function index(){
-		$this->require_privilege(4);
+		if(!$this->has_privilege(4))
+			header('Location: '.URL.'error/e401');
         $this->view->title = 'Kinabalu Residential College';
+        $this->view->render('userindex');
+    }
+    
+    function index2()
+    {
+        $this->view->title = '2';
+        $this->view->render('userindex');
+    }
+    
+    function index3()
+    {
+        $this->view->title = '3';
         $this->view->render('userindex');
     }
 	
@@ -17,7 +30,7 @@ class User extends Controller {
 	{
 		if($this->is_logged_in())
 		{
-			header('Location: ' . $this->referer);
+			header('Location: ../');
 		}
 		else
 		{
@@ -39,7 +52,7 @@ class User extends Controller {
 			}
 			else //if user is logged in and access this URL
 			{
-				header('Location: ' . $this->referer);
+				header('Location: ../');
 			}
 		}
 	}

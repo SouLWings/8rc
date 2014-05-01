@@ -5,6 +5,7 @@ require 'libs/Database.php';
 require 'libs/Controller.php';
 require 'libs/Model.php';
 require 'libs/View.php';
+require_once('SimpleCalendar.php');
 
 require 'libs/App.php';
 

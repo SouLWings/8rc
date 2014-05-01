@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title><?php echo $this->title ?></title>
 	<?php foreach($this->js as $js){?>
 	<script type='text/javascript' src='<?php echo URL ?>res/js/<?php echo $js ?>.js'></script>
 	<?php } ?>
@@ -46,30 +47,15 @@ background-image: linear-gradient(to right, #C4FF00 0%, #5CD400 100%);
 body{
 	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important; 
 }
-nav{
-	background:linear-gradient(to bottom, rgba(124,205,255,0.4), rgba(124,205,255,0));
-}
-nav li.active{
-	border-left: 5px solid rgba(24,125,255,1);
-	background: linear-gradient(to right, rgba(51,251,51,0.3),rgba(51,51,51,0));
-}
-.maincontent{
-	background:linear-gradient(to bottom, rgba(124,205,255,0.4), rgba(124,205,255,0));
-	height:300px;
-}
+
 .contentheading{
 	font-size:3em;
-}
-nav header{
-	font-size:1.5em;
-	color: #428bca;
-	padding:10px;
 }
 </style>
 </head>
 <body style='padding-top:50px;'>
 <!--<img class='stickybgi' src='img/logo/kk8logo.png'/>-->
-<div class='' style='width:98vw; margin:auto;padding:20px;'>
+<div class='' style='width:97vw;'>
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -94,10 +80,6 @@ nav header{
 	<div class='row'>
 		<?php echo $this->sidenav ?>
 		<?php echo $this->contentframe ?>
-		<div class="col-sm-9 col-sm-offset-3 col-md-offset-2 col-md-10 ">
-			<div style='clear:left'></div>
-			<br><div class='footer'>Copyright @ Sou|_Wings 2014 <span class="glyphicon glyphicon-user"></span></div>
-		</div>
 	</div>
 	
 </div>
