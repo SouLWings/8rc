@@ -12,6 +12,8 @@ http://www.sciencedirect.com/science/article/pii/S1877042813012718
 http://www.sciencedirect.com/science/article/pii/S187704281402134X
 http://www.sciencedirect.com/science/article/pii/S0268401205000198	
 
+php add on
+http://tutorialzine.com/2013/02/24-cool-php-libraries-you-should-know-about/
 
 bootstrap sample
 http://themes.startbootstrap.com/flex-admin-v1.2/flot.html
@@ -19,6 +21,7 @@ http://wrapbootstrap.com/preview/WB0B30DGR
 http://demo.okendoken.com/2.0/
 http://themeforest.net/item/clipone-bootstrap-3-responsive-admin-template/full_screen_preview/5881143
 http://bootstrap-calendar.azurewebsites.net/index-bs3.html
+http://spyrestudios.com/40-websites-built-with-the-twitter-bootstrap-framework/
 
 bootstrap addons
 http://goodybag.github.io/bootstrap-notify/

@@ -11,7 +11,7 @@ class User_Model extends Model
 	{
 		//$pw = md5($pw);
 		$query = "SELECT a.id, a.acctype_id, a.fullname, a.status FROM account a WHERE a.username = '$un' AND a.password = '$pw'";
-		if($result = $this->db->select($query))
+		if($result = $this->select($query))
 		{
 			//if 0 row or more than 1 rows return, log in = fail
 			if(sizeof($result) != 1)

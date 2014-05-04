@@ -62,6 +62,11 @@ class View {
 		require 'views/templates/layout.php';  
 	}
 	
+	public function render_singlepage($file)
+	{
+		require 'views/pages/'.$file.'.php';
+	}
+	
 	private function getOutputbuffer($path){
 		if($path!=''){
 			ob_start();

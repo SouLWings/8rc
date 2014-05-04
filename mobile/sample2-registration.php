@@ -20,7 +20,7 @@ if(sizeof($db->getAllRows($query)) == 0) //if no existing email registered, then
 	{
 		//defining subject and content of email, content can be html format
 		$subject = 'Registration succecssfull';
-		$content = "Dear $fn,<br/><p><b>Thank you</b> for registering with us. Feel free to enjoy the oyster set below.<br/><br/><img src='http://graphics8.nytimes.com/images/2008/05/16/timestopics/2oysters-395.jpg' /><br/></p>Best regards, <br/>PHPMailer."
+		$content = "Dear $fn,<br/><p><b>Thank you</b> for registering with us. Feel free to enjoy the oyster set below.<br/><br/><img src='http://graphics8.nytimes.com/images/2008/05/16/timestopics/2oysters-395.jpg' /><br/></p>Best regards, <br/>PHPMailer.";
 		
 		//email can be send by calling the sendmail function
 		sendmail($em, $subject, $content);

@@ -23,7 +23,6 @@ class Controller {
         $path = $modelPath . $name.'_model.php';
         if (file_exists($path)) {
             require $modelPath .$name.'_model.php';
-            
             $modelName = $name . '_Model';
             $this->model = new $modelName();
         }        
@@ -94,11 +93,11 @@ class Controller {
 
 	public function validate_param($param)
 	{
-		$params = explode(',',$params);
+		$params = explode(',',$param);
 		$paramarray = array();
 		$invalid = '';
 		foreach($params as $p)
-			if($paramarray[] = $this->param(trim($p, ' ')))
+			if(!$paramarray[] = $this->param(trim($p,' ')))
 				$invalid .= $p.' ';
 
 		if($invalid!='')

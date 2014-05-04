@@ -1,33 +1,84 @@
-<div class="col-sm-3 col-md-2 " style='position:relative;'>
-	<nav>
-		<header>General</header>
-		<ul class="nav nav-sidebar">
-			<li class="active"><a href="#">News</a></li>
-			<li><a href="#">Calender</a></li>
-		</ul>
-		<header>Management</header>
-		<ul class="nav nav-sidebar">
-			<li><a href="">News Approval</a></li>
-			<li><a href="">Project</a></li>
-			<li><a href="">FESENI</a></li>
-			<li><a href="">SUKMUM</a></li>
-			<li><a href="">Merit</a></li>
-			<li><a href="">Event</a></li>
-			<li><a href="">Student</a></li>
-		</ul>
+
+	<nav class="col-sm-3 col-md-3 col-lg-2" style='position:fixed'>
+	  <div class="panel">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapseG">
+			  General<i class="fa fa-caret-down pull-right"></i>
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseG" class="panel-collapse collapse in">
+		  <div class="panel-body">
+			<ul class="nav">
+				<li class="active"><a href="<?php echo URL?>"><i class="fa fa-rss"></i> News</a></li>
+				<li><a href="#"><i class="fa fa-envelope-o"></i> Message</a></li>
+				<li><a href="#"><i class="fa fa-tasks"></i> Task</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapseE">
+			  Executive Council<i class="fa fa-caret-down pull-right"></i>
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseE" class="panel-collapse collapse in">
+		  <div class="panel-body">
+			<ul class="nav">
+				<li><a href=""><i class="fa fa-info-circle"></i> News Approval</a></li>
+				<li><a href="<?php echo URL?>activity/project"><i class="fa fa-rocket"></i> Project</a></li>
+				<li><a href="<?php echo URL?>activity/event"><i class="fa fa-calendar"></i> Event</a></li>
+				<li><a href="<?php echo URL?>activity/sukmum"><i class="fa fa-dribbble"></i> SUKMUM</a></li>
+				<li><a href="<?php echo URL?>activity/feseni"><i class="fa fa-music"></i> FESENI</a></li>
+				<li><a href="<?php echo URL?>merit"><i class="fa fa-ticket"></i> Merit</a></li>
+				<li><a href=""><i class="fa fa-users"></i> Student</a></li><!-- gender, fac, race, year with option of academic session -->
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapseM">
+			  Management<i class="fa fa-caret-down pull-right"></i>
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseM" class="panel-collapse collapse in">
+		  <div class="panel-body">
+			<ul class="nav">
+				<li><a href=""><i class="fa fa-users"></i> Student</a></li><!-- gender, fac, race, year with option of academic session -->
+				<li><a href=""><i class="fa fa-info-circle"></i> News Approval</a></li>
+				<li><a href=""><i class="fa fa-key"></i> Room</a></li>
+				<li><a href=""><i class="fa fa-calendar"></i> College Activities</a></li>
+				<li><a href="<?php echo URL?>merit"><i class="fa fa-ticket"></i> Merit</a></li>
+				<li><a href="#"><i class="fa fa-wrench"></i> Maintenance</a></li>
+				<li><a href="#"><i class="fa fa-cutlery"></i> Food Order</a></li>
+				<li><a href=""><i class="fa fa-bar-chart-o"></i> Orientation Week</a></li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	  <div class="panel">
+		<div class="panel-heading">
+		  <h4 class="panel-title">
+			<a data-toggle="collapse" data-parent="#accordion" href="#collapseA">
+			  Administration<i class="fa fa-caret-down pull-right"></i>
+			</a>
+		  </h4>
+		</div>
+		<div id="collapseA" class="panel-collapse collapse in">
+		  <div class="panel-body">
+			<ul class="nav">
+				<li><a href=""><i class="fa fa-user"></i> Accounts</a></li>
+				<li><a href=""><i class="fa fa-gears"></i> Setting</a></li><!-- academic session, (theme color),  -->
+			</ul>
+		  </div>
+		</div>
+	  </div>
 	</nav>
-</div>
-<style>
-nav{
-	background:linear-gradient(to bottom, rgba(124,205,255,0.4), rgba(124,205,255,0));
-}
-nav li.active{
-	border-left: 5px solid rgba(24,125,255,1);
-	background: linear-gradient(to right, rgba(51,251,51,0.3),rgba(51,51,51,0));
-}
-nav header{
-	font-size:1.5em;
-	color: #428bca;
-	padding:10px;
-}
-</style>
+	<div class="col-sm-3 col-md-3 col-lg-2"></div>

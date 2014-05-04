@@ -1,5 +1,4 @@
-<div class="col-sm-3 col-md-2 ">
-	<nav>
+	<nav class="col-sm-3 col-md-3 col-lg-2" style='position:fixed'>
 	  <div class="panel">
 		<div class="panel-heading">
 		  <h4 class="panel-title">
@@ -11,8 +10,9 @@
 		<div id="collapse1" class="panel-collapse collapse in">
 		  <div class="panel-body">
 			<ul class="nav">
-				<li class="active"><a href="#">News</a></li>
-				<li><a href="#">Calender</a></li>
+				<li class="active"><a href="<?php echo URL?>"><i class="fa fa-rss"></i> News</a></li>
+				<li><a href="#"><i class="fa fa-envelope-o"></i> Message</a></li>
+				<li><a href="#"><i class="fa fa-tasks"></i> Task</a></li>
 			</ul>
 		  </div>
 		</div>
@@ -27,15 +27,15 @@
 		</div>
 		<div id="collapse2" class="panel-collapse collapse in">
 		  <div class="panel-body">
-			<ul class="nav nav-sidebar">
-				<li><a href="">Student</a></li><!-- gender, fac, race, year with option of academic session -->
-				<li><a href="">News Approval</a></li>
-				<li><a href="">Room</a></li>
-				<li><a href="">College Activities</a></li>
-				<li><a href="">Merit</a></li>
-				<li><a href="#">Maintenance</a></li>
-				<li><a href="#">Food Order</a></li>
-				<li><a href="">Orientation Week</a></li>
+			<ul class="nav">
+				<li><a href=""><i class="fa fa-users"></i> Student</a></li><!-- gender, fac, race, year with option of academic session -->
+				<li><a href=""><i class="fa fa-info-circle"></i> News Approval</a></li>
+				<li><a href=""><i class="fa fa-key"></i> Room</a></li>
+				<li><a href=""><i class="fa fa-calendar"></i> College Activities</a></li>
+				<li><a href="<?php echo URL?>merit"><i class="fa fa-ticket"></i> Merit</a></li>
+				<li><a href="#"><i class="fa fa-wrench"></i> Maintenance</a></li>
+				<li><a href="#"><i class="fa fa-cutlery"></i> Food Order</a></li>
+				<li><a href=""><i class="fa fa-bar-chart-o"></i> Orientation Week</a></li>
 			</ul>
 		  </div>
 		</div>
@@ -51,60 +51,10 @@
 		<div id="collapse3" class="panel-collapse collapse in">
 		  <div class="panel-body">
 			<ul class="nav">
-				<li><a href="">Accounts</a></li>
-				<li><a href="">Setting</a></li><!-- academic session, (theme color),  -->
+				<li><a href=""><i class="fa fa-user"></i> Accounts</a></li>
+				<li><a href=""><i class="fa fa-gears"></i> Setting</a></li><!-- academic session, (theme color),  -->
 			</ul>
 		  </div>
 		</div>
 	  </div>
 	</nav>
-</div>
-<style>
-nav{
-	background:#376fa7;
-	padding:15px;
-	height:100vh;
-}
-nav ul{
-	background:white;
-	border-radius:3px;
-	
-}
-.nav>li>a{
-	transition: background 200ms, padding-left 450ms, color 300ms;
-}
-nav .nav>li>a:hover, nav .nav>li>a:focus{
-	color:white;
-	background:#60d0ff;
-	padding-left:25px;
-}
-
-nav ul.nav a{
-	padding: 5px 15px;
-}
-
-nav li.active{
-	background: #52c2f1;
-}
-
-nav li.active a{
-	color:white;
-}
-nav header{
-	font-size:1.5em;
-	color: white;
-	padding:10px;
-}
-
-nav .panel-heading a{
-	display:block;
-}
-
-.panel{
-	border:none;
-}
-
-.panel-body{
-	padding:0;
-}
-</style>

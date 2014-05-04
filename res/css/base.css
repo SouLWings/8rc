@@ -1,0 +1,90 @@
+
+.brand:hover{
+	text-decoration:none;
+	color:#125b9a;
+	text-shadow: 0 0 1px #428bca;
+}
+.brand{
+	padding:5px;
+	float:left;
+	font-weight:bolder;
+	font-size:18px;
+	transition: color 0.5s
+}
+body{
+	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important;height:100%;
+}
+
+/* side nav */
+
+nav{
+	background:#477fb7; 
+	padding:15px;
+	height:100vh;
+}
+nav li:last-child a{
+	border-radius:0 0 3px 3px;
+}
+nav ul{
+	background:white;
+	border-radius:3px;
+}
+.nav>li>a{
+	transition: background 200ms, padding-left 450ms, color 300ms;
+}
+nav .nav>li>a:hover, nav .nav>li>a:focus{
+	color:white;
+	background:#60d0ff;
+	padding-left:30px;
+}
+
+nav ul.nav a{
+	padding: 5px 20px;
+}
+
+nav li.active{
+	background: #52c2f1;
+}
+
+nav li.active a{
+	color:white;
+}
+nav header{
+	font-size:1.5em;
+	color: white;
+	padding:10px;
+}
+
+nav .panel-heading a{
+	display:block;
+}
+
+/* for fontawesome */
+i.fa{
+	width:20px;
+	margin:auto;
+	text-align:center;
+	font-size:0.9em;
+}
+
+nav .panel{
+	border:none;
+}
+
+nav .panel-body{
+	padding:0;
+}
+
+/* end side nav*/
+
+/* main content */
+.nav-tabs{
+	margin-bottom:20px;
+}
+
+
+.btn-icon:hover{
+	text-decoration:none;
+}
+
+/* end main content*/

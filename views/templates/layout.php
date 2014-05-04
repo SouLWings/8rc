@@ -45,17 +45,30 @@ background-image: linear-gradient(to right, #C4FF00 0%, #5CD400 100%);
 	transition: color 0.5s
 }
 body{
-	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important; 
+	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important;
 }
 
-.contentheading{
+.maincontent > header{
 	font-size:3em;
+	font-weight:bold;
+	color:#428bca;
+	padding-left:15px;
+}
+
+.maincontent{
+	margin:5px 0;
+	opacity:0.1;
+	transition: opacity 0.4s;
+}
+.maincontent .panel{
+	margin-bottom:1px;
+	opacity:0.05;
 }
 </style>
 </head>
 <body style='padding-top:50px;'>
 <!--<img class='stickybgi' src='img/logo/kk8logo.png'/>-->
-<div class='' style='width:97vw;'>
+<div class='container' style='width:100%'>
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -81,7 +94,12 @@ body{
 		<?php echo $this->sidenav ?>
 		<?php echo $this->contentframe ?>
 	</div>
-	
+	<script>
+		
+	  $(document).ready(function () {
+		$('.maincontent, .panel').css('opacity','1');
+	  });
+	</script>
 </div>
 <?php echo $this->modalforms ?>
 </body>

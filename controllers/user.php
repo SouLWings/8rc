@@ -42,7 +42,7 @@ class User extends Controller {
 				if($user != false)
 				{
 					$_SESSION['user'] = $user;
-					$data = array('data' => 'success');
+					$data = array('data' => 'success','user' => $user);
 				}
 				else
 				{
