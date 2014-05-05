@@ -114,6 +114,15 @@ class Activity_Model extends Model
 			return true;
 		return false;
 	}
+	
+	public function get_mark($matric)
+	{
+		$qry = "SELECT sum(mt.mark) as total FROM `participation` p INNER JOIN `merit_type` mt ON p.merit_type_id = mt.id WHERE p.student_matric = '$matric' AND p.status = 'valid'";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return $result[0];
+		return false;
+	}
 }
 
 ?>

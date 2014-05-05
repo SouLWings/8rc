@@ -70,6 +70,19 @@ class Merit extends Controller {
 			$this->resp_fail('Incorrect parameter value');
 	}
     
+	function check($matric = '')
+	{
+		if(!$this->model->validate_matric($matric))
+			$this->resp_fail('Matric number not found');
+		
+		if($mark = $this->model->get_mark($matric))
+		{
+			if($mark['total'] == '')
+				$mark['total'] = '0';
+			$this->resp_success(array('merit'=>$mark['total']));
+		}
+	}
+	
     function event($id = 0, $type = 'in')
     {
 		$event = $this->model->get_event($id);
