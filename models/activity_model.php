@@ -86,9 +86,9 @@ class Activity_Model extends Model
 	public function check_attendance($matric, $eid, $signtype)
 	{
 		$status = ($signtype == 'i') ? 'signedin\' OR `status` = \'valid' : 'valid';
-		$qry = "SELECT * FROM `participation` WHERE `merit_event_id` = $eid AND `student_matric` = '$matric' AND `status` = '$status'";
-		$result = $this->query($qry);
-		if($result && $result->num_rows > 0)
+		$qry = "SELECT * FROM `participation` WHERE `merit_event_id` = $eid AND `student_matric` = '$matric' AND (`status` = '$status')";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
 			return true;
 		return false;
 	}

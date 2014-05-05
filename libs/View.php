@@ -44,7 +44,6 @@ class View {
 		$this->css[] = 'font-awesome.min';
 		$this->css[] = 'font-fsecure';
 		$this->css[] = 'base';
-		$this->css[] = 'SimpleCalendar';
 		$this->css[] = 'responsive-calendar';
 	}
 	

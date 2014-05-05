@@ -13,11 +13,11 @@ class Activity extends Controller {
     
     function create()
     {
-		$type = $this->validate_param('activitytype')[0];
-		switch ($type) {
+		$type = $this->validate_param('activitytype');
+		switch ($type[0]) {
             case 'sukmum':
-				$name = $this->validate_param('name')[0];
-                if($this->model->add_activity($name,ACADEMIC_SESSION,$type,''))
+				$name = $this->validate_param('name');
+                if($this->model->add_activity($name[0],ACADEMIC_SESSION,$type,''))
 					echo json_encode(array('status' => 'success'));
 				else
 					echo json_encode(array('status' => 'fail1'));

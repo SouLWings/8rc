@@ -27,11 +27,6 @@ class Controller {
             $this->model = new $modelName();
         }        
     }
-		
-	public function get_secured($input)
-	{
-		return mysql_real_escape_string(stripslashes(htmlentities($input)));
-	}
 
 	//check whether the user is logged in
 	public function is_logged_in()

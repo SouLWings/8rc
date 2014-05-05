@@ -15,6 +15,9 @@
   height:100%;
   background-color:rgba(66, 139, 202,0.3);
  }
+.form-control{
+	border-radius:17px;
+}
 </style>
 </head>
 <body style='padding-top:50px;'>
