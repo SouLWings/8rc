@@ -31,6 +31,44 @@ class Merit extends Controller {
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit');
     }
+	
+	function attendance()
+	{
+		sleep(1);
+		//post: student matric, event qr, start/end
+		
+		$p = $this->validate_param('matric,qr');
+		
+		if(!$this->model->validate_matric($p['matric']))
+			$this->resp_fail('Matric number not found');
+		
+		$p['sign'] = $p['qr'][0];
+		$p['qr'] = substr($p['qr'],1);
+		
+		$e = $this->model->get_event_by_qr($p['qr'], $p['sign']);
+		if(sizeof($e) <= 0)
+			$this->resp_fail('Event does not exist');
+		
+		if($this->model->check_attendance($p['matric'], $e['id'], $p['sign']))
+			$this->resp_fail('You have signed for this event');
+		
+		if($p['sign'] == 'i')
+		{
+			if($this->model->add_attendance($p['matric'],$e['merittype_id'],$e['id']))
+				$this->resp_success();
+			else
+				$this->resp_fail('Internal server error');
+		}
+		else if($p['sign'] == 'o')
+		{
+			if($this->model->validate_attendance($p['matric'],$e['id']))
+				$this->resp_success();
+			else
+				$this->resp_fail('Internal server error');
+		}
+		else
+			$this->resp_fail('Incorrect parameter value');
+	}
     
     function event($id = 0, $type = 'in')
     {
@@ -42,6 +80,7 @@ class Merit extends Controller {
 			{
 				$code = md5('kk8event'.$event['id'].'in');
 				$this->model->set_event_QR($id, $code, 'in');
+				$code = 'i'.$code;
 				
 				$this->view->code = $code;
 				$this->view->title = 'Welcome';
@@ -50,7 +89,7 @@ class Merit extends Controller {
 			}
 			else if($type=='out')
 			{
-				$code = md5('kk8event'.$event['id'].'out');
+				$code = 'o'.md5('kk8event'.$event['id'].'out');
 				$this->model->set_event_QR($id, $code, 'out');
 				
 				$this->view->code = $code;

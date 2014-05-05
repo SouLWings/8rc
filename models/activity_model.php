@@ -69,13 +69,50 @@ class Activity_Model extends Model
 		return array();
 	}
 	
-	public function set_event_QR($id, $code, $inorout)
+	public function set_event_QR($id, $qr, $signtype)
 	{
-		$column = 'startQR';
-		if($inorout = 'out')
-			$type = 'endQR';
-		$qry = "UPDATE `merit_event SET `$column` = '$code' WHERE id = $id";
+		$column = ($signtype == 'in') ? 'startQR' : 'endQR';
+		$qry = "UPDATE `merit_event` SET `$column` = '$qr' WHERE id = $id";
 		return $this->query($qry);
+	}
+	
+	public function get_event_by_qr($qr, $signtype)
+	{
+		$column = ($signtype == 'i') ? 'startQR' : 'endQR';
+		$qry = "SELECT * FROM `merit_event` WHERE `$column` = '$qr'";
+		return $this->get_first_row($qry);
+	}
+	
+	public function check_attendance($matric, $eid, $signtype)
+	{
+		$status = ($signtype == 'i') ? 'signedin\' OR `status` = \'valid' : 'valid';
+		$qry = "SELECT * FROM `participation` WHERE `merit_event_id` = $eid AND `student_matric` = '$matric' AND `status` = '$status'";
+		$result = $this->query($qry);
+		if($result && $result->num_rows > 0)
+			return true;
+		return false;
+	}
+	
+	public function add_attendance($matric, $merit_id, $event_id)
+	{
+		$qry = "INSERT INTO `participation` VALUES('','$matric',$merit_id,0,$event_id,'signedin',now())";
+			//$qry = "UPDATE `participation` SET `status` = 'valid' WHERE "
+		return $this->query($qry);
+	}
+	
+	public function validate_attendance($matric, $event_id)
+	{
+		$qry = "UPDATE `participation` SET `status` = 'valid' WHERE `student_matric` = '$matric' AND `merit_event_id` = $event_id";
+		return $this->query($qry);
+	}
+	
+	public function validate_matric($matric)
+	{
+		$qry = "SELECT * FROM `student` WHERE `matric` = '$matric'";
+		$result = $this->query($qry);
+		if($result && $result->num_rows > 0)
+			return true;
+		return false;
 	}
 }
 

@@ -29,7 +29,7 @@
 			<?php } ?>
 			<div class='col-sm-12 col-md-12'>
 			<?php for($i = 0; $i < sizeof($this->activities); $i++){  if($this->activities[$i]['status']!='trashed'){?>
-			<div class="panel panel-primary">
+			<div class="panel panel-info">
 				<div class="panel-heading">
 				  <h4 class="panel-title">
 					<a data-toggle="collapse" data-parent="#accordion" href="#project<?php echo $i?>">

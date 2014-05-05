@@ -97,17 +97,21 @@ class Controller {
 		$paramarray = array();
 		$invalid = '';
 		foreach($params as $p)
-			if(!$paramarray[] = $this->param(trim($p,' ')))
+			if(!$paramarray[$p] = $this->param(trim($p,' ')))
 				$invalid .= $p.' ';
 
 		if($invalid!='')
 		{
-			echo json_encode(array('status' => 'failed', 'msg' => "Invalid parameters: $invalid"));
-			die();
+			$this->resp_fail("Invalid parameters: $invalid");
 		}
 		
 		return $paramarray;
 	}
+	
+	/* public function validate_matric($matric)
+	{
+		return $this->model->validate_matric($matric);
+	} */
 	
 	public function param($p)
 	{
@@ -117,5 +121,21 @@ class Controller {
 			return $_GET[$p];
 		else
 			return false;
+	}
+	
+	public function resp_success($arr = array())
+	{
+		$resp = array();
+		$resp['status'] = 'success';
+		foreach($arr as $k => $v)
+			$resp[$k] = $v;
+		echo json_encode($resp);
+		exit();
+	}
+	
+	public function resp_fail($msg)
+	{
+		echo json_encode(array('status'=>'fail','msg'=>$msg));
+		exit();
 	}
 }

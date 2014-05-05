@@ -19,8 +19,10 @@
 					Venue: <?php echo $this->events[$i]['venue']?>
 					<br>Time: <?php echo date('Y-m-d h:ia',strtotime($this->events[$i]['starttime']));?>
 					<br><?php echo $this->events[$i]['description']?>
-					<br><a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/in'>Event sign in mode</a>
-					<a class='btn btn-primary'>Event sign out mode</a>
+					<br><a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/in'>
+					<i class="fa fa-level-down"></i> Event sign in mode</a>
+					<a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/out'>
+					<i class="fa fa-level-up"></i> Event sign out mode</a>
 				</div>
 			</div>
 			<div id="editevent<?php echo $i?>" class="panel-collapse collapse">
