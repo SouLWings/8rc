@@ -1,3 +1,14 @@
+<style>
+.maincontent .panel-info {
+	border: none;
+}
+.maincontent .panel {
+	box-shadow:none;
+	padding:20px 0;
+	border-bottom:1px solid #bce8f1;
+	border-radius:0;
+}
+</style>
 <div class='row maincontent'>
 	<header>
 		Event
@@ -14,21 +25,43 @@
 				<a href='#'> <i class="fa fa-trash-o"></i> Trash</a>
 			  </h4>
 			</div>
-			<div id="event<?php echo $i?>" class="panel-collapse collapse">
+			<div id="event<?php echo $i?>" class="panel-collapse collapse in">
 				<div class="panel-body table-responsive">
 					Venue: <?php echo $this->events[$i]['venue']?>
-					<br>Time: <?php echo date('Y-m-d h:ia',strtotime($this->events[$i]['starttime']));?>
+					<br>Date: <?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?>
+					<br>Time: <?php echo date('h:ia',strtotime($this->events[$i]['starttime']));?>
 					<br><?php echo $this->events[$i]['description']?>
-					<br><a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/in'>
-					<i class="fa fa-level-down"></i> Event sign in mode</a>
+					<br>
+					<a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/in'>
+						<i class="fa fa-level-down"></i> Event sign in mode
+					</a>
 					<a class='btn btn-primary' href='../merit/event/<?php echo $this->events[$i]['id']?>/out'>
-					<i class="fa fa-level-up"></i> Event sign out mode</a>
+						<i class="fa fa-level-up"></i> Event sign out mode
+					</a>
+					<br>
+					<br>
+					<a class='' href='#'>
+						<i class="fa fa-search"></i> View participant
+					</a> | 
+					<a class='' href='#'>
+						<i class="fa fa-plus"></i> Add participant
+					</a> | 
+					<a class='' href='#'>
+						<i class="fa fa-upload"></i> Upload 
+					</a> | 
+					<a class='' href='#'>
+						<i class="fa fa-download"></i> Download 
+					</a> | 
+					<a class='' href='#'>
+						<i class="fa fa-times-circle"></i> Remove all  
+					</a>
 				</div>
 			</div>
 			<div id="editevent<?php echo $i?>" class="panel-collapse collapse">
 				<div class="panel-body table-responsive">
 					Venue: <input value='<?php echo $this->events[$i]['venue']?>'/>
-					<br>Time: <input value='<?php echo date('Y-m-d h:ia',strtotime($this->events[$i]['starttime']));?>'/>
+					<br>Date: <input type='date' value='<?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?>'/>
+					<br>Time: <input type='time' value='<?php echo date('h:i:s',strtotime($this->events[$i]['starttime']));?>'/>
 					<br><textarea><?php echo $this->events[$i]['description']?></textarea>
 					<br><input type='submit' value='Edit'/>
 				</div>

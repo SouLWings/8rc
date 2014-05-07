@@ -1,5 +1,5 @@
 
-	<nav class="col-sm-3 col-md-3 col-lg-2" style='position:fixed'>
+	<nav class="col-sm-3 col-md-2 col-lg-2" style='position:fixed'>
 	  <div class="panel">
 		<div class="panel-heading">
 		  <h4 class="panel-title">
@@ -81,4 +81,4 @@
 		</div>
 	  </div>
 	</nav>
-	<div class="col-sm-3 col-md-3 col-lg-2"></div>
+	<div class="col-sm-3 col-md-2 col-lg-2"></div>

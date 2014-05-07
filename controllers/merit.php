@@ -102,8 +102,9 @@ class Merit extends Controller {
 			}
 			else if($type=='out')
 			{
-				$code = 'o'.md5('kk8event'.$event['id'].'out');
+				$code = md5('kk8event'.$event['id'].'out');
 				$this->model->set_event_QR($id, $code, 'out');
+				$code = 'o'.$code;
 				
 				$this->view->code = $code;
 				$this->view->title = 'Thank you';
