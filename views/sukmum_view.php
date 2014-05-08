@@ -22,7 +22,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Search: </label>
 					<div class="col-sm-10">
-					  <input type="text" class="form-control" autofocus>
+					  <input id='searchbox' class="form-control">
 					</div>
 				</div>
 			</div>
@@ -33,11 +33,49 @@
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
 					<a data-toggle="collapse" data-parent="#accordion" href="#project<?php echo $i?>" class='pull-left'>
-					  <i class="fa fa-caret-square-o-down"></i> <?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?>
+					  <i class="fa fa-caret-square-o-down"></i> <span><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
 					</a>
-					<a href='#project<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
-					<a href='#'> <i class="fa fa-trophy"></i> Add archivement</a>
+					<a href='#project<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
+					<a href='#project<?php echo $i?>delete'> <i class="fa fa-trash-o"></i> Trash</a>
 				  </h4>
+				</div>
+				<div id="project<?php echo $i?>delete" class="panel-collapse collapse">
+					<div class="panel-body table-responsive">
+						Confirm delete?
+						<input type='submit' class='btn btn-danger' value='Delete'/>
+					</div>
+				</div>
+				<div id="project<?php echo $i?>edit" class="panel-collapse collapse">
+					<div class="panel-body table-responsive">
+						<form id='editsukmumform' action='create' method='POST' class="form-horizontal">
+							<fieldset>
+								<div class='form-group'>
+									<label class='col-sm-3 col-md-3 control-label'>SUKMUM Name:</label>
+									<div class='col-sm-3 col-md-3'>
+										<input required type='text' value='' name='name' id='inputname' class='form-control'/>
+									</div>
+								</div>
+								<div class='form-group'>
+									<div>
+										<input type='hidden' value='sukmum' name='type' />
+										<div class='col-md-2 col-md-offset-3'>
+										<input type='submit' class='btn btn-primary' value='Edit'/>
+										<div class='loading pull-right' style='display:none'></div>
+										</div>
+										<div class='col-md-8'>
+										<br>
+										<div class="alert alert-success col-md-5 col-md-offset-4">
+											<span class="alert-link"></span> Record updated successfully!
+										</div>
+										<div class="alert alert-danger col-md-5 col-md-offset-4">
+											<span class="alert-link"></span> Failed to update record <span id='failmsg'></span>
+										</div>
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
 				</div>
 				<div id="project<?php echo $i?>" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
@@ -58,36 +96,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
 								<tr>
 									<td>asd</td>
 									<td>asd</td>
@@ -196,16 +204,6 @@
 						<td>asd</td>
 						<td>asd</td>
 					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -214,14 +212,26 @@
 				<fieldset>
 					<div class='form-group'>
 						<label class='col-sm-3 col-md-3 control-label'>SUKMUM Name:</label>
-						<div class='col-sm-7 col-md-7'>
+						<div class='col-sm-3 col-md-3'>
 							<input required type='text' value='' name='name' id='inputname' class='form-control'/>
 						</div>
 					</div>
 					<div class='form-group'>
-						<div class='col-sm-4 col-sm-offset-3 col-md-3 col-md-offset-3'>
-							<input type='hidden' value='sukmum' name='activitytype' />
+						<div>
+							<input type='hidden' value='sukmum' name='type' />
+							<div class='col-md-2 col-md-offset-3'>
 							<input type='submit' class='btn btn-primary' value='Create'/>
+							<div class='loading pull-right' style='display:none'></div>
+							</div>
+							<div class='col-md-8'>
+							<br>
+							<div class="alert alert-success col-md-5 col-md-offset-4">
+								<span class="alert-link"></span> Record added successfully!
+							</div>
+							<div class="alert alert-danger col-md-5 col-md-offset-4">
+								<span class="alert-link"></span> Failed to add record <span id='failmsg'></span>
+							</div>
+							</div>
 						</div>
 					</div>
 				</fieldset>
@@ -230,30 +240,67 @@
 	</div>
 	</div>
 </div>
+<style>
+.alert{
+	
+}
+</style>
 <script>
+$('.alert').hide();
 $(document).ready(function () {
+	$('#searchbox').keyup(function(event){
+		if (!(event.keyCode > 47 && event.keyCode < 58) && !(event.keyCode > 64 && event.keyCode < 91 ) && event.keyCode!=8) {
+			//$('.form-horizontal').append(event.keyCode+ ' ');
+			event.preventDefault(); 
+			return false;
+		}   
+		var key = $(this).val().toLowerCase();
+		if(key == '')
+		{
+			$('#sukmumtab .panel').slideDown();
+		}
+		else
+		{
+			$('#sukmumtab .panel').clearQueue();
+			$('#sukmumtab .panel').delay(500).slideUp(function(){
+				$("#sukmumtab .panel span").filter(function() {
+					return $(this).text().toLowerCase().indexOf(key) > -1;
+				  }).parent().parent().parent().parent().slideDown(function(){
+					$('#sukmumtab .panel').css('height','auto');
+				  });
+			})
+		}
+	});
+
 	$('#newsukmumform').submit(function(){
 		var url = $(this).attr('action');
         var post = $(this).serialize();
 		$(this).find('fieldset').prop('disabled','disabled');
+		$(".loading").show();
         $.post(url, post
 		,function(data,status){
-			$('#newsukmumform fieldset').removeProp('disabled');
+			$('#newsukmumform fieldset').prop('disabled','');
+			$(".loading").hide();
 			if(status == 'success')
 			{
 				if(data['status'] == 'success')
-				{	
-					alert('Success');
+				{
+					$('.alert-success').show().delay(3000).fadeOut(2000);
+					$('input[name="matric"]').val('');
 				}
 				else
 				{
-					alert(data);
+					$('#failmsg').text(data['msg']);
+					$('.alert-danger').show().delay(5000).fadeOut(3000);
 				}
 			}
 			else
 			{
-				alert(data);
+				$('#failmsg').text("Could not connect to server.");
+				$('.alert-danger').show().delay(5000).fadeOut(3000);
 			}
+			$('fieldset').prop('disabled','');
+			$('input[name="matric"]').focus();
 		},'json');
         return false;
 	});

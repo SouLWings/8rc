@@ -100,7 +100,7 @@
 				$('#failmsg').text("Could not connect to server.");
 				$('.alert-danger').show().delay(5000).fadeOut(3000);
 			}
-			$('fieldset').removeProp('disabled');
+			$('fieldset').prop('disabled','');
 			$('input[name="matric"]').focus();
 		},'json');
 		return false;

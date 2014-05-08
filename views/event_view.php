@@ -3,6 +3,7 @@
 	border: none;
 }
 .maincontent .panel {
+	opacity:0.05;
 	box-shadow:none;
 	padding:20px 0;
 	border-bottom:1px solid #bce8f1;
@@ -15,7 +16,7 @@
 	</header>
 	<div class='col-sm-6 col-md-8'>
 		<?php for($i = 0; $i < sizeof($this->events); $i++){ ?>
-		<div class="panel panel-info" style='transition: opacity 0.5s ease <?php echo $i*0.03;?>s'>
+		<div class="panel panel-info" style='transition: opacity 0.5s ease <?php echo $i*0.15;?>s'>
 			<div class="panel-heading">
 			  <h4 class="panel-title text-right">
 				<a data-toggle="collapse" data-parent="#accordion" href="#event<?php echo $i?>" class='pull-left'>
@@ -103,6 +104,6 @@
 		"2014-05-03": {}, 
 		"2014-06-12": {}}
 	});
-	$('.post').css('opacity','1');
+	$('.panel').css('opacity','1');
   });
 </script>

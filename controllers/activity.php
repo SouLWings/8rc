@@ -11,20 +11,24 @@ class Activity extends Controller {
 		header('Location:'.URL);
     }
     
+    function delete($id)
+    {
+		
+	}
     function create()
     {
-		$type = $this->validate_param('activitytype');
-		switch ($type[0]) {
+		sleep(1);
+		$activity = $this->validate_param('type,name');
+		switch ($activity['type']) {
             case 'sukmum':
-				$name = $this->validate_param('name');
-                if($this->model->add_activity($name[0],ACADEMIC_SESSION,$type,''))
-					echo json_encode(array('status' => 'success'));
+                if($this->model->add_activity($activity['name'],ACADEMIC_SESSION,$activity['type'],''))
+					$this->resp_success();
 				else
-					echo json_encode(array('status' => 'fail1'));
+					$this->resp_fail('Internal error');
                 break;
 				
             default:
-				echo json_encode(array('status' => 'fail2'));
+				$this->resp_fail('Activity not defined');
                 break;
         }
     }

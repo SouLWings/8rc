@@ -46,6 +46,7 @@ background-image: linear-gradient(to right, #C4FF00 0%, #5CD400 100%);
 }
 body{
 	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important;
+	font-size:15px;
 }
 
 .maincontent > header{
@@ -61,7 +62,7 @@ body{
 	transition: opacity 0.4s;
 }
 .maincontent .panel{
-	margin-bottom:1px;
+	margin-bottom:3px;
 	opacity:0.05;
 }
 </style>

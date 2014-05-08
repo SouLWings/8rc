@@ -1,13 +1,2 @@
-Hello World. Testing!
-
-asd
-as
-da
-sd
-asddefine('DB_NAME', 'kk8');
-
-
-define('DB_NAME', 'asd');
-
-
-define('DB_NAME', 'asd');
+<?php
+echo date('D d M Y',strtotime("2014-05-07 14:13:00"));

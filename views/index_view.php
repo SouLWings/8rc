@@ -5,7 +5,6 @@
 	padding:15px 0;
 	border-radius: 10px;
 	margin:10px 0;
-	transition: opacity 0.5s;
 	-webkit-backface-visibility: hidden;
 	opacity:0.05;
 }
@@ -65,7 +64,7 @@
 			</ul>
 			<div class="tab-content">
 			  <div class="tab-pane fade in active" id="home"> 
-				<div class='row post' style='transition-delay: opacity 0.1s;'>
+				<div class='row post' style='transition: opacity 0.5s ease 0.1s, background 0.2s;'>
 					<header class='col-md-2'>
 						<div class='picframe'>
 							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
@@ -96,7 +95,7 @@
 					</div>
 					</article>
 				</div>
-				<div class='post'style='transition-delay: 0.2s;'>
+				<div class='post'style='transition: opacity 0.5s ease 0.2s, background 0.2s;'>
 					<header>
 						<div class='picframe'>
 							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
@@ -128,7 +127,7 @@
 						</form>
 					</div>
 				</div>
-				<div class='post'style='transition-delay: 0.3s;'>
+				<div class='post'style='transition: opacity 0.5s ease 0.3s, background 0.2s;'>
 					<header>
 						<div class='picframe'>
 							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
@@ -160,7 +159,7 @@
 						</form>
 					</div>
 				</div>
-				<div class='post'style='transition-delay: 0.4s;'>
+				<div class='post'style='transition: opacity 0.5s ease 0.4s, background 0.2s;'>
 					<header>
 						<div class='picframe'>
 							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
@@ -192,7 +191,7 @@
 						</form>
 					</div>
 				</div>
-				<div class='post'style='transition-delay: 0.5s;'>
+				<div class='post'style='transition: opacity 0.5s ease 0.5s, background 0.2s;'>
 					<header>
 						<div class='picframe'>
 							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
