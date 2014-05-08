@@ -23,7 +23,7 @@
 				  <i class="fa fa-caret-square-o-down"></i> <?php echo $this->events[$i]['name'] ?>
 				</a>
 				<a href='#editevent<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
-				<a href='#'> <i class="fa fa-trash-o"></i> Trash</a>
+				<a href='#' data-toggle="collapse"> <i class="fa fa-trash-o"></i> Trash</a>
 			  </h4>
 			</div>
 			<div id="event<?php echo $i?>" class="panel-collapse collapse in">

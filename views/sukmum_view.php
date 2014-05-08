@@ -11,8 +11,7 @@
 		</ul>
 	</div>
 	
-
-	<div class="col-sm-12 col-md-12">
+	<div class="col-sm-12 col-md-10">
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="sukmumtab">
 			<?php if(sizeof($this->activities)==0){?>
@@ -29,45 +28,47 @@
 			<?php } ?>
 			<div class='col-sm-12 col-md-12'>
 			<?php for($i = 0; $i < sizeof($this->activities); $i++){  if($this->activities[$i]['status']!='trashed'){?>
-			<div class="panel panel-info" style='transition: opacity 0.5s ease <?php echo $i*0.03;?>s'>
+			<div class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.03;?>s'>
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
 					<a data-toggle="collapse" data-parent="#accordion" href="#project<?php echo $i?>" class='pull-left'>
 					  <i class="fa fa-caret-square-o-down"></i> <span><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
 					</a>
 					<a href='#project<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
-					<a href='#project<?php echo $i?>delete'> <i class="fa fa-trash-o"></i> Trash</a>
+					<a href='#project<?php echo $i?>delete' data-toggle="collapse" > <i class="fa fa-trash-o"></i> Trash</a>
 				  </h4>
 				</div>
 				<div id="project<?php echo $i?>delete" class="panel-collapse collapse">
-					<div class="panel-body table-responsive">
-						Confirm delete?
-						<input type='submit' class='btn btn-danger' value='Delete'/>
+					<div class="panel-body table-responsive text-center">
+						<div class='col-md-offset-3 col-md-5'>
+							Confirm to delete this sukmum activity?<br>
+							<a href='#' class='deletebtn btn btn-danger' data-id='<?php echo $this->activities[$i]['id']?>'>Delete</a>
+						</div>
 					</div>
 				</div>
 				<div id="project<?php echo $i?>edit" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
-						<form id='editsukmumform' action='create' method='POST' class="form-horizontal">
+						<form id='editsukmumform' action='edit' method='POST' class="form-horizontal">
 							<fieldset>
 								<div class='form-group'>
-									<label class='col-sm-3 col-md-3 control-label'>SUKMUM Name:</label>
-									<div class='col-sm-3 col-md-3'>
-										<input required type='text' value='' name='name' id='inputname' class='form-control'/>
+									<label class='col-md-4 control-label'>SUKMUM Name:</label>
+									<div class='col-md-3'>
+										<input required type='text' value='<?php echo $this->activities[$i]['name']?>' name='name' class='form-control'/>
 									</div>
 								</div>
 								<div class='form-group'>
 									<div>
-										<input type='hidden' value='sukmum' name='type' />
-										<div class='col-md-2 col-md-offset-3'>
+										<input type='hidden' value='<?php echo $this->activities[$i]['id']?>' name='id' />
+										<div class='col-md-2 col-md-offset-4'>
 										<input type='submit' class='btn btn-primary' value='Edit'/>
 										<div class='loading pull-right' style='display:none'></div>
 										</div>
 										<div class='col-md-8'>
 										<br>
-										<div class="alert alert-success col-md-5 col-md-offset-4">
+										<div class="alert alert-success col-md-5 col-md-offset-6">
 											<span class="alert-link"></span> Record updated successfully!
 										</div>
-										<div class="alert alert-danger col-md-5 col-md-offset-4">
+										<div class="alert alert-danger col-md-5 col-md-offset-6">
 											<span class="alert-link"></span> Failed to update record <span id='failmsg'></span>
 										</div>
 										</div>
@@ -96,24 +97,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
 								<tr>
 									<td>asd</td>
 									<td>asd</td>
@@ -241,13 +224,49 @@
 	</div>
 </div>
 <style>
-.alert{
-	
+.maincontent .panel{
+	/* -webkit-transform: rotateY(15deg); */
+	width:98%;
+	margin: 4px auto;
+}
+.maincontent .panel:hover{
+	/* -webkit-transform: translate(3px, 0px); */
+	width:100%;
+}
+.maincontent .panel-info:hover .panel-heading{
+	background-image: linear-gradient(to bottom,#d1e6f4 0,#bbdaf3 100%);
 }
 </style>
 <script>
 $('.alert').hide();
 $(document).ready(function () {
+	$('.deletebtn').click(function(event){
+		$btn = $(this);
+		//alert($(this).data('id'));
+		$btn.prop('disabled','disabled');
+        $.post('delete', {id:$(this).data('id')}
+		,function(data,status){
+			$btn.prop('disabled','');
+			if(status == 'success')
+			{
+				if(data['status'] == 'success')
+				{
+					$btn.parent().parent().parent().parent().css({'-webkit-transform':'translate(2000px,0px)'}).slideUp(500,function(){
+						$(this).remove();
+					});
+				}
+				else
+				{
+					alert(data['msg']);
+				}
+			}
+			else
+			{
+				alert('Could not connect to server.');
+			}			
+		},'json');
+	});
+	
 	$('#searchbox').keyup(function(event){
 		if (!(event.keyCode > 47 && event.keyCode < 58) && !(event.keyCode > 64 && event.keyCode < 91 ) && event.keyCode!=8) {
 			//$('.form-horizontal').append(event.keyCode+ ' ');
@@ -272,35 +291,36 @@ $(document).ready(function () {
 		}
 	});
 
-	$('#newsukmumform').submit(function(){
+	$('form').submit(function(){
+		$form = $(this);
 		var url = $(this).attr('action');
         var post = $(this).serialize();
-		$(this).find('fieldset').prop('disabled','disabled');
-		$(".loading").show();
+		$form.find('fieldset').prop('disabled','disabled');
+		$form.find(".loading").show();
+		//$form.append(post);
         $.post(url, post
 		,function(data,status){
-			$('#newsukmumform fieldset').prop('disabled','');
-			$(".loading").hide();
+			$form.find('fieldset').prop('disabled','');
+			$form.find(".loading").hide();
+			$('.alert').finish().hide();
 			if(status == 'success')
 			{
 				if(data['status'] == 'success')
 				{
-					$('.alert-success').show().delay(3000).fadeOut(2000);
-					$('input[name="matric"]').val('');
+					$form.find('.alert-success').show().delay(3000).fadeOut(2000);
 				}
 				else
 				{
-					$('#failmsg').text(data['msg']);
-					$('.alert-danger').show().delay(5000).fadeOut(3000);
+					$form.find('#failmsg').text(data['msg']);
+					$form.find('.alert-danger').show().delay(5000).fadeOut(3000);
 				}
 			}
 			else
 			{
-				$('#failmsg').text("Could not connect to server.");
-				$('.alert-danger').show().delay(5000).fadeOut(3000);
+				$form.find('#failmsg').text("Could not connect to server.");
+				$form.find('.alert-danger').show().delay(5000).fadeOut(3000);
 			}
-			$('fieldset').prop('disabled','');
-			$('input[name="matric"]').focus();
+			$form.find('fieldset').prop('disabled','');
 		},'json');
         return false;
 	});

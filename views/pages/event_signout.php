@@ -73,13 +73,13 @@
   $(document).ready(function (){
 	$('form').submit(function(){
 		$('#loading').show();
-		$('.alert').finish().hide();
 		var url = $(this).attr('action');
         var post = $(this).serialize();
 		$('fieldset').prop('disabled','disabled');
         $.post(url, post
 		,function(data,status){
 			$('.alert-link').text($('input[name="matric"]').val());
+			$('.alert').finish().hide();
 			$('body').append(post);
 			$('#loading').hide();
 			if(status == 'success')

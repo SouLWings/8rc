@@ -15,7 +15,6 @@ class Model{
 		}
 		return $row;
 	}
-	
 	//return an associate array of all rows from the given query
 	public function select($selectquery)
 	{

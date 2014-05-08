@@ -47,6 +47,7 @@ background-image: linear-gradient(to right, #C4FF00 0%, #5CD400 100%);
 body{
 	font-family: "FSecureOffice", Arial, Helvetica, sans-serif !important;
 	font-size:15px;
+	overflow-y:scroll;
 }
 
 .maincontent > header{

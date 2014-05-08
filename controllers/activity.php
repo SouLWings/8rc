@@ -11,10 +11,26 @@ class Activity extends Controller {
 		header('Location:'.URL);
     }
     
-    function delete($id)
+    function delete()
     {
-		
+		sleep(1);
+		$activity = $this->validate_param('id');
+		if($this->model->delete_activity($activity['id']))
+			$this->resp_success();
+		else
+			$this->resp_fail('Internal error');
 	}
+    
+    function edit()
+    {
+		sleep(1);
+		$activity = $this->validate_param('id,name');
+		if($this->model->edit_activity($activity['id'], $activity['name']))
+			$this->resp_success();
+		else
+			$this->resp_fail('Internal error');
+	}
+	
     function create()
     {
 		sleep(1);

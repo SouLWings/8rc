@@ -9,7 +9,7 @@ class Activity_Model extends Model
 	
 	public function add_activity($name,$session,$type,$desc)
 	{
-		$qry = "INSERT INTO `activity` VALUES('','$name','$session','$type','$desc','','')";
+		$qry = "INSERT INTO `activity` VALUES('','$name','$session','$type','$desc',now(),'')";
 		return $this->query($qry);
 	}
 	
@@ -45,12 +45,22 @@ class Activity_Model extends Model
 
 	private function get_activities($type, $old = false){
 		$cond = $old ? '<' : '=';
-		$qry = "SELECT * FROM `activity` WHERE `type` LIKE '%$type' AND `session` $cond '".ACADEMIC_SESSION."'";
+		$qry = "SELECT * FROM `activity` WHERE `type` LIKE '%$type' AND `session` $cond '".ACADEMIC_SESSION."' ORDER BY `timeupdate` desc";
 		if($result = $this->select($qry))
-		{
 			return $result;
-		}
 		return array();
+	}
+	
+	public function delete_activity($id)
+	{
+		$qry = "DELETE FROM `activity` WHERE id = $id";
+		return $this->query($qry);
+	}
+	
+	public function edit_activity($id, $name)
+	{
+		$qry = "UPDATE `activity` SET `name` = '$name' WHERE id = $id";
+		return $this->query($qry);
 	}
 
 	public function get_event($id)
@@ -63,9 +73,7 @@ class Activity_Model extends Model
 	{
 		$qry = "SELECT * FROM `merit_event` WHERE `session` = '".ACADEMIC_SESSION."'";
 		if($result = $this->select($qry))
-		{
 			return $result;
-		}
 		return array();
 	}
 	
@@ -75,7 +83,6 @@ class Activity_Model extends Model
 		$qry = "UPDATE `merit_event` SET `$column` = '$qr' WHERE id = $id";
 		return $this->query($qry);
 	}
-	
 	public function get_event_by_qr($qr, $signtype)
 	{
 		$column = ($signtype == 'i') ? 'startQR' : 'endQR';
