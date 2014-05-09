@@ -1,11 +1,11 @@
 <div class='row maincontent'>
 	<header>
-		SUKMUM
+		<?php echo $this->activitytype?>
 	</header>
 	<div class="col-sm-12 col-md-12">
 		<ul class="nav nav-tabs">
-		  <li class='active'><a href="sukmum">Ongoing SUKMUM</a></li>
-		  <li><a href="#pastsukmumtab" data-toggle="tab">Past SUKMUM</a></li>
+		  <li class='active'><a href="sukmum">Ongoing <?php echo $this->activitytype?></a></li>
+		  <li><a href="#pastsukmumtab" data-toggle="tab">Past <?php echo $this->activitytype?></a></li>
 		  <li><a href="#archivementtab" data-toggle="tab">Archivement</a></li>
 		  <li><a href="#newtab" data-toggle="tab">Create new</a></li>
 		</ul>
@@ -15,7 +15,7 @@
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="sukmumtab">
 			<?php if(sizeof($this->activities)==0){?>
-			<h2>No SUKMUM record found.</h2>
+			<h2>No <?php echo $this->activitytype?> record found.</h2>
 			<?php } else {?>
 			<div class="col-sm-4 col-md-4 form-horizontal">
 				<div class="form-group">
@@ -31,27 +31,27 @@
 			<div class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.03;?>s'>
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
-					<a data-toggle="collapse" data-parent="#accordion" href="#project<?php echo $i?>" class='pull-left'>
+					<a data-toggle="collapse" data-parent="#accordion" href="#activity<?php echo $i?>" class='pull-left'>
 					  <i class="fa fa-caret-square-o-down"></i> <span><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
 					</a>
-					<a href='#project<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
-					<a href='#project<?php echo $i?>delete' data-toggle="collapse" > <i class="fa fa-trash-o"></i> Trash</a>
+					<a href='#activity<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
+					<a href='#activity<?php echo $i?>delete' data-toggle="collapse" > <i class="fa fa-trash-o"></i> Trash</a>
 				  </h4>
 				</div>
-				<div id="project<?php echo $i?>delete" class="panel-collapse collapse">
+				<div id="activity<?php echo $i?>delete" class="panel-collapse collapse">
 					<div class="panel-body table-responsive text-center">
 						<div class='col-md-offset-3 col-md-5'>
-							Confirm to delete this sukmum activity?<br>
+							Confirm to delete this <?php echo $this->activitytype?> activity?<br>
 							<a href='#' class='deletebtn btn btn-danger' data-id='<?php echo $this->activities[$i]['id']?>'>Delete</a>
 						</div>
 					</div>
 				</div>
-				<div id="project<?php echo $i?>edit" class="panel-collapse collapse">
+				<div id="activity<?php echo $i?>edit" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
 						<form id='editsukmumform' action='edit' method='POST' class="form-horizontal">
 							<fieldset>
 								<div class='form-group'>
-									<label class='col-md-4 control-label'>SUKMUM Name:</label>
+									<label class='col-md-4 control-label'><?php echo $this->activitytype?> Name:</label>
 									<div class='col-md-3'>
 										<input required type='text' value='<?php echo $this->activities[$i]['name']?>' name='name' class='form-control'/>
 									</div>
@@ -78,7 +78,7 @@
 						</form>
 					</div>
 				</div>
-				<div id="project<?php echo $i?>" class="panel-collapse collapse">
+				<div id="activity<?php echo $i?>" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
 						<?php echo $this->activities[$i]['description']?>
 						<h2>Committee Member</h2>
@@ -126,12 +126,12 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 				  <h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordion" href="#pastproject<?php echo $i?>">
+					<a data-toggle="collapse" data-parent="#accordion" href="#pastactivity<?php echo $i?>">
 					  <?php echo $this->pastactivities[$i]['name'].' '.$this->pastactivities[$i]['session'] ?>
 					</a>
 				  </h4>
 				</div>
-				<div id="pastproject<?php echo $i?>" class="panel-collapse collapse">
+				<div id="pastactivity<?php echo $i?>" class="panel-collapse collapse">
 				  <div class="panel-body table-responsive">
 					<?php echo $this->pastactivities[$i]['description']?>
 				  </div>
@@ -243,15 +243,15 @@ $(document).ready(function () {
 	$('.deletebtn').click(function(event){
 		$btn = $(this);
 		//alert($(this).data('id'));
-		$btn.prop('disabled','disabled');
+		$btn.toggleClass('disabled');
         $.post('delete', {id:$(this).data('id')}
 		,function(data,status){
-			$btn.prop('disabled','');
+			$btn.toggleClass('disabled');
 			if(status == 'success')
 			{
 				if(data['status'] == 'success')
 				{
-					$btn.parent().parent().parent().parent().css({'-webkit-transform':'translate(2000px,0px)'}).slideUp(500,function(){
+					$btn.parent().parent().parent().parent().css({'-webkit-transform':'translate(2000px,0px)'}).slideUp(500).fadeOut(500,function(){
 						$(this).remove();
 					});
 				}
@@ -291,7 +291,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$('form').submit(function(){
+	$('.maincontent form').submit(function(){
 		$form = $(this);
 		var url = $(this).attr('action');
         var post = $(this).serialize();

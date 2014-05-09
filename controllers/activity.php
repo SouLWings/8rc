@@ -51,6 +51,7 @@ class Activity extends Controller {
     
     function project()
     {
+		$this->view->activitytype  = 'Projects';
 		$this->view->activities = $this->model->get_all_projects();
 		$this->view->pastactivities = $this->model->get_past_projects();
         $this->view->title = 'Projects';
@@ -59,6 +60,7 @@ class Activity extends Controller {
     
     function sukmum()
     {
+		$this->view->activitytype = 'Sukmum';
 		$this->view->activities = $this->model->get_all_sukmum();
 		$this->view->pastactivities = $this->model->get_past_sukmum();
         $this->view->title = 'SUKMUM';

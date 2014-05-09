@@ -32,8 +32,8 @@
 				<li><a href=""><i class="fa fa-info-circle"></i> News Approval</a></li>
 				<li><a href="<?php echo URL?>activity/project"><i class="fa fa-rocket"></i> Project</a></li>
 				<li><a href="<?php echo URL?>activity/event"><i class="fa fa-calendar"></i> Event</a></li>
-				<li><a href="<?php echo URL?>activity/sukmum"><i class="fa fa-dribbble"></i> SUKMUM</a></li>
-				<li><a href="<?php echo URL?>activity/feseni"><i class="fa fa-music"></i> FESENI</a></li>
+				<li><a href="<?php echo URL?>activity/sukmum"><i class="fa fa-dribbble"></i> Sukmum</a></li>
+				<li><a href="<?php echo URL?>activity/feseni"><i class="fa fa-music"></i> Feseni</a></li>
 				<li><a href="<?php echo URL?>merit"><i class="fa fa-ticket"></i> Merit</a></li>
 				<li><a href=""><i class="fa fa-users"></i> Student</a></li><!-- gender, fac, race, year with option of academic session -->
 			</ul>

@@ -22,14 +22,14 @@
 				<a data-toggle="collapse" data-parent="#accordion" href="#event<?php echo $i?>" class='pull-left'>
 				  <i class="fa fa-caret-square-o-down"></i> <?php echo $this->events[$i]['name'] ?>
 				</a>
-				<a href='#editevent<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
+				<a href='#editevent<?php echo $i?>' data-toggle="collapse" class='asd'> <i class="fa fa-gear"></i> Edit</a> | 
 				<a href='#' data-toggle="collapse"> <i class="fa fa-trash-o"></i> Trash</a>
 			  </h4>
 			</div>
 			<div id="event<?php echo $i?>" class="panel-collapse collapse in">
 				<div class="panel-body table-responsive">
-					Venue: <?php echo $this->events[$i]['venue']?>
-					<br>Date: <?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?>
+					Venue: <span class='inline_edit'><?php echo $this->events[$i]['venue']?></span><input value='<?php echo $this->events[$i]['venue']?>' class='inline_edit' style='display:none' />
+					<br>Date: <span class='inline_edit'><?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?></span><input type='date' value='<?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?>' style='display:none' class='inline_edit'/>
 					<br>Time: <?php echo date('h:ia',strtotime($this->events[$i]['starttime']));?>
 					<br><?php echo $this->events[$i]['description']?>
 					<br>
@@ -58,7 +58,7 @@
 					</a>
 				</div>
 			</div>
-			<div id="editevent<?php echo $i?>" class="panel-collapse collapse">
+	<!--	<div id="editevent<?php echo $i?>" class="panel-collapse collapse">
 				<div class="panel-body table-responsive">
 					Venue: <input value='<?php echo $this->events[$i]['venue']?>'/>
 					<br>Date: <input type='date' value='<?php echo date('Y-m-d',strtotime($this->events[$i]['starttime']));?>'/>
@@ -66,7 +66,7 @@
 					<br><textarea><?php echo $this->events[$i]['description']?></textarea>
 					<br><input type='submit' value='Edit'/>
 				</div>
-			</div>
+			</div>-->
 		</div>
 		<?php } ?>
     </div>
@@ -105,5 +105,9 @@
 		"2014-06-12": {}}
 	});
 	$('.panel').css('opacity','1');
+	$('.asd').click(function(){
+		$('span.inline_edit').hide();
+		$('input.inline_edit').show();
+	});
   });
 </script>
