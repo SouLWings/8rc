@@ -25,11 +25,110 @@ class Merit extends Controller {
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit_list');
     }
+	
+    function event($id = 0, $type = 'in')
+    {
+		$event = $this->model->get_event($id);
+		if(sizeof($event)>0)
+		{
+			$this->view->event = $event;
+			if($type=='in')
+			{
+				$code = md5('kk8event'.$event['id'].'in');
+				$this->model->set_event_QR($id, $code, 'in');
+				$code = 'i'.$code;
+				
+				$this->view->code = $code;
+				$this->view->title = 'Welcome';
+				$this->view->render_singlepage('event_signin');
+				//session_destroy();
+			}
+			else if($type=='out')
+			{
+				$code = md5('kk8event'.$event['id'].'out');
+				$this->model->set_event_QR($id, $code, 'out');
+				$code = 'o'.$code;
+				
+				$this->view->code = $code;
+				$this->view->title = 'Thank you';
+				$this->view->render_singlepage('event_signout');
+				//session_destroy();
+			}
+			else{
+				header('Location:'.URL.'error');
+			}
+		}
+		else{
+			header('Location:'.URL.'error');
+		}
+	}
     
     function download()
     {
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit');
+    }
+    
+    function upload($type = '')
+	{
+		$activity_id = $this->validate_param('id');
+		$activity_id = $activity_id['id'];
+		
+		print_r($this->validate_param('id'));
+		print_r('<br>');
+		print_r($activity_id);
+		print_r('<br>');
+		print_r($_POST);
+		print_r('<br>');
+		print_r($_FILES);
+		require('util/PHPCsv/csv.php');
+		if($_FILES["csvfile"]["type"] == "application/vnd.ms-excel")
+		{
+			$lines = new CsvReader($_FILES['csvfile']['tmp_name']);
+			foreach ($lines as $line_number => $columms)
+			{
+				$matric = $columms[0];
+				if($this->model->validate_matric($matric))
+				{
+					switch($type){
+						case('sukmum'):
+							if($merit_id = $this->model->get_merit_id('Sukmum participant'))
+							$this->model->add_participation($matric, $merit_id, $activity_id);
+							header("Location: ".URL."activity/sukmum?$activity_id");
+							break;
+							
+						case('feseni'):
+							$merit_id = $this->model->get_merit_id('Feseni participant');
+							$this->model->add_participation($matric, $merit_id, $activity_id);
+							header("Location: ".URL."activity/feseni");
+							break;
+							
+						case('mproject'):
+							$merit_id = $this->model->get_merit_id($columms[1], "(MEGA)");
+							$this->model->add_participation($matric, $merit_id, $activity_id);
+							header("Location: ".URL."activity/project");
+							break;
+							
+						case('nproject'):
+							$merit_id = $this->model->get_merit_id($columms[1]);
+							$this->model->add_participation($matric, $merit_id, $activity_id);
+							header("Location: ".URL."activity/project");
+							break;
+							
+						default:
+							echo 'oh no';
+					}
+				}
+				else
+				{
+					
+				}
+			}
+		}
+		else
+			echo 'Incorrect type';
+			
+		// header("Location: page1.php");
     }
 	
 	function attendance()
@@ -75,48 +174,9 @@ class Merit extends Controller {
 		if(!$this->model->validate_matric($matric))
 			$this->resp_fail('Matric number not found');
 		
-		if($mark = $this->model->get_mark($matric))
+		if($involvements = $this->model->get_involvement($matric))
 		{
-			if($mark['total'] == '')
-				$mark['total'] = '0';
-			$this->resp_success(array('merit'=>$mark['total']));
-		}
-	}
-	
-    function event($id = 0, $type = 'in')
-    {
-		$event = $this->model->get_event($id);
-		if(sizeof($event)>0)
-		{
-			$this->view->event = $event;
-			if($type=='in')
-			{
-				$code = md5('kk8event'.$event['id'].'in');
-				$this->model->set_event_QR($id, $code, 'in');
-				$code = 'i'.$code;
-				
-				$this->view->code = $code;
-				$this->view->title = 'Welcome';
-				$this->view->render_singlepage('event_signin');
-				//session_destroy();
-			}
-			else if($type=='out')
-			{
-				$code = md5('kk8event'.$event['id'].'out');
-				$this->model->set_event_QR($id, $code, 'out');
-				$code = 'o'.$code;
-				
-				$this->view->code = $code;
-				$this->view->title = 'Thank you';
-				$this->view->render_singlepage('event_signout');
-				//session_destroy();
-			}
-			else{
-				header('Location:'.URL.'error');
-			}
-		}
-		else{
-			header('Location:'.URL.'error');
+			$this->resp_success(array('merit'=>$involvements));
 		}
 	}
 }

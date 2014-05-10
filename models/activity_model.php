@@ -83,6 +83,7 @@ class Activity_Model extends Model
 		$qry = "UPDATE `merit_event` SET `$column` = '$qr' WHERE id = $id";
 		return $this->query($qry);
 	}
+	
 	public function get_event_by_qr($qr, $signtype)
 	{
 		$column = ($signtype == 'i') ? 'startQR' : 'endQR';
@@ -100,10 +101,39 @@ class Activity_Model extends Model
 		return false;
 	}
 	
+	// public function add_feseni_participation($matric, $merit_id, $activity_id)
+	// {
+		// return $this->add_participation($matric, $merit_id, $activity_id);
+	// }
+	
+	// public function add_sukmum_participation($matric, $merit_id, $activity_id)
+	// {
+		// return $this->add_participation($matric, $merit_id, $activity_id);
+	// }
+	
+	// public function add_mega_project_participation($matric, $position, $activity_id)
+	// {
+		// return $this->add_participation($matric, $merit_id, $activity_id);
+	// }
+	
+	public function add_participation($matric, $merit_id, $activity_id)
+	{
+		$qry = "INSERT INTO `participation` VALUES('', '$matric', $merit_id, $activity_id, 0, 'valid', now(),'".ACADEMIC_SESSION."')";
+		return $this->query($qry);
+	}
+	
+	public function get_merit_id($position, $project_type = '')
+	{
+		$qry = "SELECT * FROM `merit_type` WHERE `name` LIKE '".$position.$project_type."'";
+		$result = $this->select($qry);
+		if(sizeof($result) == 1)
+			return $result[0]['id'];
+		return false;
+	}
+	
 	public function add_attendance($matric, $merit_id, $event_id)
 	{
-		$qry = "INSERT INTO `participation` VALUES('','$matric',$merit_id,0,$event_id,'signedin',now())";
-			//$qry = "UPDATE `participation` SET `status` = 'valid' WHERE "
+		$qry = "INSERT INTO `participation` VALUES('','$matric',$merit_id,0,$event_id,'signedin',now(),'".ACADEMIC_SESSION."')";
 		return $this->query($qry);
 	}
 	
@@ -128,6 +158,15 @@ class Activity_Model extends Model
 		$result = $this->select($qry);
 		if(sizeof($result) > 0)
 			return $result[0];
+		return false;
+	}
+	
+	public function get_involvement($matric)
+	{
+		$qry = "SELECT mt.mark as mark, mt.type as type, mt.name as position, COALESCE(a.name, me.name) as activityname FROM `participation` p INNER JOIN `merit_type` mt ON mt.id = p.merit_type_id LEFT JOIN `activity` a ON a.id = p.activity_id LEFT JOIN `merit_event` me ON me.id = p.Merit_event_id WHERE p.student_matric = '$matric' AND p.status = 'valid' AND p.session = '".ACADEMIC_SESSION."'";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return $result;
 		return false;
 	}
 }

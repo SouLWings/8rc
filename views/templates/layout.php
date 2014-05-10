@@ -100,6 +100,7 @@ body{
 		
 	  $(document).ready(function () {
 		$('.maincontent, .panel').css('opacity','1');
+		$('input[type=file]').bootstrapFileInput();
 	  });
 	</script>
 </div>

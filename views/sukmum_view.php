@@ -21,20 +21,20 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Search: </label>
 					<div class="col-sm-10">
-					  <input id='searchbox' class="form-control">
+					  <input id='searchbox' class="form-control" autofocus>
 					</div>
 				</div>
 			</div>
 			<?php } ?>
 			<div class='col-sm-12 col-md-12'>
 			<?php for($i = 0; $i < sizeof($this->activities); $i++){  if($this->activities[$i]['status']!='trashed'){?>
-			<div class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.03;?>s'>
+			<div class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.02;?>s'>
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
 					<a data-toggle="collapse" data-parent="#accordion" href="#activity<?php echo $i?>" class='pull-left'>
-					  <i class="fa fa-caret-square-o-down"></i> <span><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
+					  <i class="fa fa-caret-square-o-down"></i> <span class='activityname'><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
 					</a>
-					<a href='#activity<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-gear"></i> Edit</a> | 
+					<a href='#activity<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-pencil-square-o"></i> Edit</a> | 
 					<a href='#activity<?php echo $i?>delete' data-toggle="collapse" > <i class="fa fa-trash-o"></i> Trash</a>
 				  </h4>
 				</div>
@@ -48,7 +48,7 @@
 				</div>
 				<div id="activity<?php echo $i?>edit" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
-						<form id='editsukmumform' action='edit' method='POST' class="form-horizontal">
+						<form id='editsukmumform' action='edit' method='POST' class="form-horizontal form-ajax">
 							<fieldset>
 								<div class='form-group'>
 									<label class='col-md-4 control-label'><?php echo $this->activitytype?> Name:</label>
@@ -83,10 +83,17 @@
 						<?php echo $this->activities[$i]['description']?>
 						<h2>Committee Member</h2>
 						<a href='#'> <i class="fa fa-plus-circle"></i> Add Entry</a> | 
-						<a href='#'> <i class="fa fa-upload"></i> Upload</a> | 
+						<a href='#memberupload<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-upload"></i> Upload</a> | 
 						<a href='#'> <i class="fa fa-download"></i> Download</a> | 
 						<a href='#'> <i class="fa fa-times-circle"></i> Remove All Entries</a>
-						<br>
+						<br/>
+						<div id='memberupload<?php echo $i?>' class='entry-action collapse'>
+							<form action='/8rc/merit/upload/<?php echo $this->activities[$i]['type']?>' method='POST' enctype="multipart/form-data">
+								<input type="file" name='csvfile' title="Upload a .csv file" class='btnupload' required>
+								<input type='hidden' name='id' value='<?php echo $this->activities[$i]['id']?>'/>
+								<input type='submit'  class='btn btn-primary' style='display:inline'/>
+							</form>
+						</div>
 						<table class="table table-bordered table-hover table-striped ">
 							<thead>
 								<tr>
@@ -191,7 +198,7 @@
 			</table>
 		</div>
 		<div class="tab-pane fade" id="newtab"> 
-			<form id='newsukmumform' action='create' method='POST' class="form-horizontal">
+			<form id='newsukmumform' action='create' method='POST' class="form-horizontal form-ajax">
 				<fieldset>
 					<div class='form-group'>
 						<label class='col-sm-3 col-md-3 control-label'>SUKMUM Name:</label>
@@ -203,17 +210,17 @@
 						<div>
 							<input type='hidden' value='sukmum' name='type' />
 							<div class='col-md-2 col-md-offset-3'>
-							<input type='submit' class='btn btn-primary' value='Create'/>
-							<div class='loading pull-right' style='display:none'></div>
+								<input type='submit' class='btn btn-primary' value='Create'/>
+								<div class='loading pull-right' style='display:none'></div>
 							</div>
 							<div class='col-md-8'>
-							<br>
-							<div class="alert alert-success col-md-5 col-md-offset-4">
-								<span class="alert-link"></span> Record added successfully!
-							</div>
-							<div class="alert alert-danger col-md-5 col-md-offset-4">
-								<span class="alert-link"></span> Failed to add record <span id='failmsg'></span>
-							</div>
+								<br/>
+								<div class="alert alert-success col-md-8 col-md-offset-2">
+									<span class="alert-link"></span><i class='fa fa-info-circle'></i> Record added successfully!
+								</div>
+								<div class="alert alert-danger col-md-5 col-md-offset-4">
+									<span class="alert-link"></span> Failed to add record <span id='failmsg'></span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -236,10 +243,28 @@
 .maincontent .panel-info:hover .panel-heading{
 	background-image: linear-gradient(to bottom,#d1e6f4 0,#bbdaf3 100%);
 }
+
+.table{
+	margin-top: 10px;
+}
 </style>
 <script>
 $('.alert').hide();
 $(document).ready(function () {
+	$('.btnupload').change(function(event){
+		var exts = $(this).val().split('.');
+		var ext = exts[exts.length-1];
+		if(ext.toLowerCase() == 'xls' || ext.toLowerCase() == 'xlsx')
+		{
+			$(this).val("");
+			alert("Please save the excel file as .csv format");
+		}
+		else if(ext.toLowerCase() != 'csv')
+		{
+			$(this).val("");
+			alert("Please choose a .csv file");
+		}
+	});
 	$('.deletebtn').click(function(event){
 		$btn = $(this);
 		//alert($(this).data('id'));
@@ -263,35 +288,26 @@ $(document).ready(function () {
 			else
 			{
 				alert('Could not connect to server.');
-			}			
+			}
 		},'json');
 	});
 	
 	$('#searchbox').keyup(function(event){
-		if (!(event.keyCode > 47 && event.keyCode < 58) && !(event.keyCode > 64 && event.keyCode < 91 ) && event.keyCode!=8) {
-			//$('.form-horizontal').append(event.keyCode+ ' ');
-			event.preventDefault(); 
+		if (!(event.keyCode > 47 && event.keyCode < 58) && !(event.keyCode > 64 && event.keyCode < 91 ) && event.keyCode!=8) 
 			return false;
-		}   
 		var key = $(this).val().toLowerCase();
-		if(key == '')
-		{
-			$('#sukmumtab .panel').slideDown();
-		}
-		else
-		{
-			$('#sukmumtab .panel').clearQueue();
-			$('#sukmumtab .panel').delay(500).slideUp(function(){
-				$("#sukmumtab .panel span").filter(function() {
-					return $(this).text().toLowerCase().indexOf(key) > -1;
-				  }).parent().parent().parent().parent().slideDown(function(){
-					$('#sukmumtab .panel').css('height','auto');
-				  });
-			})
-		}
+		$('#sukmumtab .panel').each(function(){
+			//$(this).clearQueue();
+			if($(this).find("span.activityname").text().toLowerCase().indexOf(key) > -1)
+				$(this).slideDown(function(){
+					$(this).css('height','auto');
+				});
+			else
+				$(this).slideUp();
+		});
 	});
 
-	$('.maincontent form').submit(function(){
+	$('.maincontent .form-ajax').submit(function(){
 		$form = $(this);
 		var url = $(this).attr('action');
         var post = $(this).serialize();
@@ -324,5 +340,6 @@ $(document).ready(function () {
 		},'json');
         return false;
 	});
+	//$('.alert-success').show();
 });
 </script>

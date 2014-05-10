@@ -69,6 +69,7 @@ class Activity extends Controller {
     
     function event()
     {
+		$this->view->activitytype = 'Event';
 		$this->view->events = $this->model->get_all_events();
         $this->view->title = 'Event';
         $this->view->render('event');

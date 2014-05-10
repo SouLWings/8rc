@@ -99,7 +99,6 @@ class Controller {
 		{
 			$this->resp_fail("Invalid parameters: $invalid");
 		}
-		
 		return $paramarray;
 	}
 	

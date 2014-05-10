@@ -12,7 +12,7 @@
 </style>
 <div class='row maincontent'>
 	<header>
-		Event
+		<?php echo $this->activitytype ?>
 	</header>
 	<div class='col-sm-6 col-md-8'>
 		<?php for($i = 0; $i < sizeof($this->events); $i++){ ?>
@@ -22,7 +22,7 @@
 				<a data-toggle="collapse" data-parent="#accordion" href="#event<?php echo $i?>" class='pull-left'>
 				  <i class="fa fa-caret-square-o-down"></i> <?php echo $this->events[$i]['name'] ?>
 				</a>
-				<a href='#editevent<?php echo $i?>' data-toggle="collapse" class='asd'> <i class="fa fa-gear"></i> Edit</a> | 
+				<a href='#editevent<?php echo $i?>' data-toggle="collapse" class='asd'> <i class="fa fa-pencil-square-o"></i> Edit</a> | 
 				<a href='#' data-toggle="collapse"> <i class="fa fa-trash-o"></i> Trash</a>
 			  </h4>
 			</div>
