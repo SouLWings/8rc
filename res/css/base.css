@@ -22,6 +22,9 @@ nav{
 	padding:15px;
 	/* height:100vh; */
 }
+a{
+	cursor:pointer;
+}
 nav li:last-child a{
 	border-radius:0 0 3px 3px;
 }
@@ -104,7 +107,7 @@ nav .panel-body{
 
 .form-control{
 	padding: 4px 12px;
-	font-size: 18px;
+	font-size: 15px;
 }
 
 .alert{

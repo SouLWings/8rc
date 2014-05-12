@@ -271,7 +271,6 @@ $(document).ready(function () {
 		$btn.toggleClass('disabled');
         $.post('delete', {id:$(this).data('id')}
 		,function(data,status){
-			$btn.toggleClass('disabled');
 			if(status == 'success')
 			{
 				if(data['status'] == 'success')
@@ -289,6 +288,7 @@ $(document).ready(function () {
 			{
 				alert('Could not connect to server.');
 			}
+			$btn.toggleClass('disabled');
 		},'json');
 	});
 	

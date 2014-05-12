@@ -72,7 +72,7 @@
 					</header>
 					<article class='col-md-9'>
 					<div class='posttime pull-right'>
-						<?php echo date("Y-m-d h:i:sa"); ?>
+						<?php echo date("h:i:sa d-m-Y"); ?>
 					</div>
 					<div class='profilelink'>
 						<a href='#'>Chew Sheen Yeen</a>
@@ -104,7 +104,7 @@
 							<a href='#'>Chew Sheen Yeen</a>
 						</div>
 						<div class='posttime'>
-							<?php echo date("Y-m-d h:i:sa"); ?>
+							<?php echo date("h:i:sa d-m-Y"); ?>
 						</div>
 					</header>
 					<div style='clear:both'></div>
@@ -136,7 +136,7 @@
 							<a href='#'>Chew Sheen Yeen</a>
 						</div>
 						<div class='posttime'>
-							<?php echo date("Y-m-d h:i:sa"); ?>
+							<?php echo date("h:i:sa d-m-Y"); ?>
 						</div>
 					</header>
 					<div style='clear:both'></div>
@@ -168,7 +168,7 @@
 							<a href='#'>Chew Sheen Yeen</a>
 						</div>
 						<div class='posttime'>
-							<?php echo date("Y-m-d h:i:sa"); ?>
+							<?php echo date("h:i:sa d-m-Y"); ?>
 						</div>
 					</header>
 					<div style='clear:both'></div>
@@ -200,7 +200,7 @@
 							<a href='#'>Chew Sheen Yeen</a>
 						</div>
 						<div class='posttime'>
-							<?php echo date("Y-m-d h:i:sa"); ?>
+							<?php echo date("h:i:sa d-m-Y"); ?>
 						</div>
 					</header>
 					<div style='clear:both'></div>

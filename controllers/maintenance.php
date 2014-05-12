@@ -64,6 +64,7 @@ class Maintenance extends Controller {
 			$this->resp_fail('Internal error');
 	}
     
+	//need test
 	function get()
 	{
 		$matric = $this->validate_param('matric');
@@ -72,9 +73,4 @@ class Maintenance extends Controller {
 		else
 			$this->resp_fail('Internal error');
 	}
-	
-	
-	
-	
-	
 }
