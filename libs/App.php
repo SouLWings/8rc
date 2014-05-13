@@ -130,6 +130,33 @@ class App{
         $this->_controller->index();
         exit;
     }
+
 }
 
+class Log{
+	public function d($qry)
+	{
+		$lines = file('log.txt'); 
+		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now")).": $qry\r\n\n";
+		$fp = fopen('log.txt', 'w'); 
+		fwrite($fp, implode('', $lines)); 
+		fclose($fp);
+	}
+	public function q($qry)
+	{
+		$lines = file('query_log.sql'); 
+		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now"))."\r\n$qry\r\n\n";
+		$fp = fopen('query_log.sql', 'w'); 
+		$new = array();
+		if(sizeof($lines)>28)
+		{
+			for($i = sizeof($lines)-28; $i < sizeof($lines); $i++)
+				$new[] = $lines[$i];
+			fwrite($fp, implode('', $new)); 
+		}
+		else
+			fwrite($fp, implode('', $lines)); 
+		fclose($fp);
+	}
+}
 ?>

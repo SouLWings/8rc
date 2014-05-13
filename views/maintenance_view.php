@@ -19,11 +19,28 @@ span.inline-edit{
 }
 
 span.inline-edit.editable{
-	border: 2px dashed #ccf;
+	border: 1px solid #ccf;
+	padding: 4px 12px;
+font-size: 15px;
+color: #555;
+background-color: #fff;
+background-image: none;
+border: 1px solid #ccc;
+border-radius: 4px;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+-webkit-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
+span.inline-edit.editable:focus{
+border-color: #66afe9;
+outline: 0;
+-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
 span.inline-edit.editable:hover{
-	border: 2px solid #ccf;
+	/* border: 2px solid #ccf; */
 }
 </style>
 <div class='row maincontent'>
@@ -61,15 +78,15 @@ span.inline-edit.editable:hover{
 		?>
 		<div data-id='<?php echo $this->maintenances[$i]['id'] ?>' class="panel panel-<?php echo $style;?>" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.02;?>s'>
 			<div class="panel-heading">
-			  <h4 class="panel-title text-right">
-				<a data-toggle="collapse" data-parent="#accordion" href="#maintenance<?php echo $i?>" class='pull-left'>
-				  Issue #<?php echo $this->maintenances[$i]['id'] ?>
+			  <h4 class="panel-title ">
+				<a data-toggle="collapse" data-parent="#accordion" href="#maintenance<?php echo $i?>" >
+				  <i class="fa fa-plus-square-o"></i> Issue #<?php echo $this->maintenances[$i]['id'] ?>
 				</a>
+				<?php if($style=='info'){ ?><div class='pull-right'>
 				<a class='save'> <i class="fa fa-save"></i> Save</a>
 				<span> | </span>
 				<a class='edit'> <i class="fa fa-pencil-square-o"></i> Edit</a> 
-				<?php if($style=='info'){ ?>
-				 | <a href='#maintenance<?php echo $i?>delete' data-toggle="collapse"> <i class="fa fa-trash-o"></i> Trash</a>
+				 | <a href='#maintenance<?php echo $i?>delete' data-toggle="collapse"> <i class="fa fa-trash-o"></i> Trash</a></div>
 				<?php } ?>
 			  </h4>
 			</div>
@@ -105,11 +122,10 @@ span.inline-edit.editable:hover{
 					<br/>
 					
 					<span class='col-xs-4'>Description </span>
-					<span class='col-xs-8 inline-edit'>
-						<?php echo $this->maintenances[$i]['description'] ?>
-					</span>
+					<span class='col-xs-8 inline-edit'><?php echo $this->maintenances[$i]['description'] ?></span>
 					<br/>
 					<br/>
+					<?php Log::d($this->maintenances[$i]['description']) ?>
 					
 					<span class='col-xs-4'>Date completed </span>
 					<span class='col-xs-8'><?php echo $this->maintenances[$i]['datecomplete'] ?></span>
@@ -170,21 +186,21 @@ span.inline-edit.editable:hover{
 	$('.save').hide();
 	$(document).ready(function () {
 		$('.edit').click(function(){
-			$(this).parent().parent().parent().find(".save").show();
-			$(this).parent().parent().parent().find("span.inline-edit").addClass("editable");
-			$(this).parent().parent().parent().find("span.inline-edit").prop("contenteditable", 'true');
-			$(this).parent().parent().parent().find("span.inline-edit").focus();
+			$panel = $(this).parent().parent().parent().parent();
+			$panel.find(".save").show();
+			$panel.find("span.inline-edit").addClass("editable");
+			$panel.find("span.inline-edit").prop("contenteditable", 'true');
+			$panel.find("span.inline-edit").focus();
 		});
 		
 		$('.save').click(function(){
 			$save = $(this);
-			$panel = $(this).parent().parent().parent();
+			$panel = $(this).parent().parent().parent().parent();
 			$editvalue = $panel.find("span.inline-edit");
-			console.log('id: '+$editvalue.text());
 			$.post('edit', {
 				maintenance_id: $panel.data('id'),
 				issue: 's',
-				location: $('span[name="location"]').text(),
+				location: $panel.find('span[name="location"]').text().trim(),
 				desc: $editvalue.text()
 			},function(data,status){
 				if(status == 'success')

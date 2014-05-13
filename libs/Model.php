@@ -5,10 +5,10 @@ class Model{
 	}
 	
 	//return an associate array of first row from the given query
-	public function get_first_row($selectquery)
+	public function get_first_row($qry)
 	{
 		$row = array();
-		if($result = $this->query($selectquery))
+		if($result = $this->query($qry))
 		{
 			$row = $result->fetch_assoc();
 			$result->free();
@@ -16,10 +16,11 @@ class Model{
 		return $row;
 	}
 	//return an associate array of all rows from the given query
-	public function select($selectquery)
+	public function select($qry)
 	{
+		Log::q($qry);
 		$rows = array();
-		if($result = $this->query($selectquery))
+		if($result = $this->query($qry))
 		{
 			while ($row = $result->fetch_assoc())
 				$rows[] = $row;
@@ -35,13 +36,16 @@ class Model{
 	}
 	
 	//count the number of rows of result of a given query
-	public function row_count($selectquery)
+	public function row_count($qry)
 	{
-		return $this->query($selectquery)->num_rows;
+		return $this->query($qry)->num_rows;
 	}
 	
 	public function query($qry){
+		Log::q($qry);
 		return $this->db->con->query($qry);
-	}
+	}	
+	
+
 }
 ?>

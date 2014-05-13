@@ -68,7 +68,7 @@ class Maintenance extends Controller {
 	function get()
 	{
 		$matric = $this->validate_param('matric');
-		if($result = $this->model->get_all_maintenance($matric))
+		if($result = $this->model->get_all_maintenance($matric['matric']))
 			$this->resp_success(array('maintenance'=>$result));
 		else
 			$this->resp_fail('Internal error');

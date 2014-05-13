@@ -110,9 +110,9 @@ class Controller {
 	public function param($p)
 	{
 		if(isset($_POST[$p]) && $_POST[$p] != '')
-			return $_POST[$p];
+			return trim($_POST[$p],' ');
 		else if(isset($_GET[$p]) && $_GET[$p] != '')
-			return $_GET[$p];
+			return trim($_GET[$p],' ');
 		else
 			return false;
 	}

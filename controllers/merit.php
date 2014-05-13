@@ -22,6 +22,7 @@ class Merit extends Controller {
 	//list all merit
     function all()
     {
+		$this->view->merits = $this->model->get_merit_list();
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit_list');
     }
@@ -63,10 +64,35 @@ class Merit extends Controller {
 		}
 	}
     
-    function download()
+    function download($type = '', $id = '')
     {
-        $this->view->title = 'Student\'s Merit';
-        $this->view->render('merit');
+		require_once('util/PHPCsv/csv.php');
+		if($type == '' && $id == '')
+		{
+			$data = $this->model->get_merit_list();
+
+			header('Content-Type: text/csv');
+			header('Content-Disposition: attachment;filename="merit_mark_list.csv"');
+			header('Cache-Control: max-age=0');
+			$file = new CsvWriter('php://output');
+			$file->addline(array('Name','Matric','Merit'));
+			foreach ($data as $line) {
+				$file->addLine($line);
+			}
+		}
+		else if($type == 'activity' && intval($id) > 0)
+		{
+			$data = $this->model->get_merit_list_of_activity($id);
+			$activity = $this->model->get_activity($id);
+			header('Content-Type: text/csv');
+			header('Content-Disposition: attachment;filename="'.$activity['name'].'_list.csv"');
+			header('Cache-Control: max-age=0');
+			$file = new CsvWriter('php://output');
+			$file->addline(array('Name','Matric','Position'));
+			foreach ($data as $line) {
+				$file->addLine($line);
+			}
+		}
     }
     
     function upload($type = '')
@@ -94,7 +120,7 @@ class Merit extends Controller {
 						case('sukmum'):
 							if($merit_id = $this->model->get_merit_id('Sukmum participant'))
 							$this->model->add_participation($matric, $merit_id, $activity_id);
-							header("Location: ".URL."activity/sukmum?$activity_id");
+							header("Location: ".URL."activity/sukmum?id=$activity_id");
 							break;
 							
 						case('feseni'):
@@ -178,5 +204,18 @@ class Merit extends Controller {
 		{
 			$this->resp_success(array('merit'=>$involvements));
 		}
+		else
+			$this->resp_fail('Internal error');
+	}
+	
+	function add()
+	{
+		sleep(1);
+		$participation = $this->validate_param('matric,merittypeid,id');
+		$activity_id = $participation['id'];
+		if($this->model->add_participation($participation['matric'], $participation['merittypeid'], $activity_id))
+			header("Location: ".URL."activity/sukmum?id=$activity_id");
+		else
+			$this->resp_fail('Internal error');
 	}
 }

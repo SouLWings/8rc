@@ -8,6 +8,7 @@
 		  <li><a href="#pastsukmumtab" data-toggle="tab">Past <?php echo $this->activitytype?></a></li>
 		  <li><a href="#archivementtab" data-toggle="tab">Archivement</a></li>
 		  <li><a href="#newtab" data-toggle="tab">Create new</a></li>
+		  <li><a href="#settingtab" data-toggle="tab">Setting</a></li>
 		</ul>
 	</div>
 	
@@ -28,11 +29,11 @@
 			<?php } ?>
 			<div class='col-sm-12 col-md-12'>
 			<?php for($i = 0; $i < sizeof($this->activities); $i++){  if($this->activities[$i]['status']!='trashed'){?>
-			<div class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.02;?>s'>
+			<div data-id='<?php echo $this->activities[$i]['id']?>' class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.02;?>s'>
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
 					<a data-toggle="collapse" data-parent="#accordion" href="#activity<?php echo $i?>" class='pull-left'>
-					  <i class="fa fa-caret-square-o-down"></i> <span class='activityname'><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
+					  <i class="fa fa-plus-square-o"></i> <span class='activityname'><?php echo $this->activities[$i]['name'].' '.$this->activities[$i]['session'] ?></span>
 					</a>
 					<a href='#activity<?php echo $i?>edit' data-toggle="collapse"> <i class="fa fa-pencil-square-o"></i> Edit</a> | 
 					<a href='#activity<?php echo $i?>delete' data-toggle="collapse" > <i class="fa fa-trash-o"></i> Trash</a>
@@ -82,16 +83,34 @@
 					<div class="panel-body table-responsive">
 						<?php echo $this->activities[$i]['description']?>
 						<h2>Committee Member</h2>
-						<a href='#'> <i class="fa fa-plus-circle"></i> Add Entry</a> | 
+						<a href='#memberadd<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-plus-circle"></i> Add Entry</a> | 
 						<a href='#memberupload<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-upload"></i> Upload</a> | 
-						<a href='#'> <i class="fa fa-download"></i> Download</a> | 
+						<a href='<?php echo URL?>merit/download/activity/<?php echo $this->activities[$i]['id']?>'> <i class="fa fa-download"></i> Download</a> | 
 						<a href='#'> <i class="fa fa-times-circle"></i> Remove All Entries</a>
 						<br/>
+						<br/>
+						<div id='memberadd<?php echo $i?>' class='entry-action collapse'>
+							<form class="form-inline" method='POST' action='<?php echo URL ?>merit/add/<?php echo $this->activities[$i]['type']?>'>
+							  <div class="form-group">
+								<input type="text" name='matric' class="form-control" required pattern='[A-z]{3}[0-9]{6}' title='eg. EEE130014' placeholder="Matric number">
+							  </div>
+							  <div class="form-group">
+								<select class='form-control' name='merittypeid'>
+									<?php foreach($this->meritpositions as $p): ?>
+									<option value='<?php echo $p['id'] ?>'><?php echo $p['name'] ?></option>
+									<?php endforeach; ?>
+								</select> 
+							  </div>
+							  <input type='hidden' value='<?php echo $this->activities[$i]['id']?>' name='id' />
+							  <button type="submit" class="btn btn-primary">Add record</button>
+							</form>
+						</div>
 						<div id='memberupload<?php echo $i?>' class='entry-action collapse'>
-							<form action='/8rc/merit/upload/<?php echo $this->activities[$i]['type']?>' method='POST' enctype="multipart/form-data">
+							<form action='<?php echo URL ?>merit/upload/<?php echo $this->activities[$i]['type']?>' method='POST' enctype="multipart/form-data">
 								<input type="file" name='csvfile' title="Upload a .csv file" class='btnupload' required>
 								<input type='hidden' name='id' value='<?php echo $this->activities[$i]['id']?>'/>
 								<input type='submit'  class='btn btn-primary' style='display:inline'/>
+								<p><b>*Make sure the CSV file follows the required format.</b></p>
 							</form>
 						</div>
 						<table class="table table-bordered table-hover table-striped ">
@@ -99,23 +118,20 @@
 								<tr>
 									<th>Name</th>
 									<th>Matric no.</th>
-									<th>Room</th>
 									<th>Position</th>
 								</tr>
 							</thead>
 							<tbody>
+								<?php if(sizeof($this->activities[$i]['participant']) > 0){ ?>
+								<?php foreach($this->activities[$i]['participant'] as $p){ ?>
 								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
+									<td><?php echo $p['name']?></td>
+									<td><?php echo $p['matric']?></td>
+									<td><?php echo $p['type']?></td>
 								</tr>
-								<tr>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-									<td>asd</td>
-								</tr>
+								<?php }}else{ ?>
+								<tr><td colspan='3'>No data found.</td></tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -341,5 +357,13 @@ $(document).ready(function () {
         return false;
 	});
 	//$('.alert-success').show();
+	
+	<?php if(isset($_GET['id'])){ ?>
+	$('.panel[data-id=<?php echo $_GET['id'] ?>] .activityname').click();
+	$('.panel[data-id=<?php echo $_GET['id'] ?>]').ScrollTo({
+		duration: 600,
+		easing: 'linear'
+	});
+	<?php } ?>
 });
 </script>

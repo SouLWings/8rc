@@ -60,7 +60,12 @@ class Activity extends Controller {
     
     function sukmum()
     {
+		// echo '<pre>';
+		// print_r($this->model->get_all_sukmum());
+		// echo '</pre>';
+		// die();
 		$this->view->activitytype = 'Sukmum';
+		$this->view->meritpositions = $this->model->get_merit_positions('sukmum');
 		$this->view->activities = $this->model->get_all_sukmum();
 		$this->view->pastactivities = $this->model->get_past_sukmum();
         $this->view->title = 'SUKMUM';

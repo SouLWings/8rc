@@ -46,8 +46,22 @@ class Activity_Model extends Model
 	private function get_activities($type, $old = false){
 		$cond = $old ? '<' : '=';
 		$qry = "SELECT * FROM `activity` WHERE `type` LIKE '%$type' AND `session` $cond '".ACADEMIC_SESSION."' ORDER BY `timeupdate` desc";
-		if($result = $this->select($qry))
+		$result = $this->select($qry);
+		if($result && sizeof($result) > 0)
+		{
+			for($i = 0; $i < sizeof($result); $i++)
+			{
+				$id = $result[$i]['id'];
+				$qry2 = "SELECT s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id";
+				$result2 = $this->select($qry2);
+				if($result2 && sizeof($result2) > 0)
+					$participants = $result2;
+				else
+					$participants = array();
+				$result[$i]['participant'] = $participants;
+			}
 			return $result;
+		}
 		return array();
 	}
 	
@@ -61,6 +75,12 @@ class Activity_Model extends Model
 	{
 		$qry = "UPDATE `activity` SET `name` = '$name' WHERE id = $id";
 		return $this->query($qry);
+	}
+
+	public function get_activity($id)
+	{
+		$qry = "SELECT * FROM `activity` WHERE id = $id";
+		return $this->get_first_row($qry);
 	}
 
 	public function get_event($id)
@@ -152,12 +172,39 @@ class Activity_Model extends Model
 		return false;
 	}
 	
+	public function get_merit_positions($type)
+	{
+		$qry = "SELECT * FROM `merit_type` WHERE `type` = '$type'";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return $result;
+		return false;
+	}
+	
 	public function get_mark($matric)
 	{
 		$qry = "SELECT sum(mt.mark) as total FROM `participation` p INNER JOIN `merit_type` mt ON p.merit_type_id = mt.id WHERE p.student_matric = '$matric' AND p.status = 'valid'";
 		$result = $this->select($qry);
 		if(sizeof($result) > 0)
 			return $result[0];
+		return false;
+	}
+	
+	public function get_merit_list()
+	{
+		$qry = "SELECT s.name, p.student_matric, sum(mt.mark) as total FROM `participation` p INNER JOIN merit_type mt ON mt.id = p.merit_type_id INNER JOIN student s on s.matric = p.student_matric GROUP BY student_matric ORDER BY total desc";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return $result;
+		return false;
+	}
+	
+	public function get_merit_list_of_activity($id)
+	{
+		$qry2 = "SELECT s.name as name, s.matric as matric, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id";
+		$result2 = $this->select($qry2);
+		if($result2 && sizeof($result2) > 0)
+			return $result2;
 		return false;
 	}
 	

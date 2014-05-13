@@ -29,78 +29,24 @@
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="rankingtab"> 
 			<div class='tabpane-control'>
-				<a href='<?php echo URL ?>' class='btn btn-primary btn-sm'><i class="fa fa-download"></i> Download</a>
+				<a href='<?php echo URL ?>merit/download' class='btn btn-primary btn-sm'><i class="fa fa-download"></i> Download</a>
 			</div>
 			<table class="table table-bordered table-hover ">
 				<thead>
 					<tr>
 						<th>Name</th>
 						<th>Matric no.</th>
-						<th>Room</th>
 						<th>Merit</th>
 					</tr>
 				</thead>
 				<tbody>
+					<?php foreach($this->merits as $m){ ?>
 					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
+						<td><?php echo $m['name'] ?></td>
+						<td><?php echo $m['student_matric'] ?></td>
+						<td><?php echo $m['total'] ?></td>
 					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
-					<tr>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-						<td>asd</td>
-					</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
