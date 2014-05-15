@@ -2,7 +2,7 @@
 /* for post */
 .post{
 	background:rgba(124,205,255,0.1);
-	padding:15px 0;
+	padding:15px 15px;
 	border-radius: 10px;
 	margin:10px 0;
 	-webkit-backface-visibility: hidden;
@@ -61,40 +61,11 @@
 			<ul class="nav nav-tabs">
 			  <li class='active'><a href="#home" data-toggle="tab"><i class="fa fa-bullhorn"></i> Announcement</a></li>
 			  <li><a href="#profile" data-toggle="tab">Event</a></li>
+			  <li><a href="#profile" data-toggle="tab">Discussion</a></li>
 			</ul>
 			<div class="tab-content">
 			  <div class="tab-pane fade in active" id="home"> 
-				<div class='row post' style='transition: opacity 0.5s ease 0.1s, background 0.2s;'>
-					<header class='col-md-2'>
-						<div class='picframe'>
-							<img class='postpic' src='<?php echo URL?>res/img/profilepic/3.jpg'/>
-						</div>
-					</header>
-					<article class='col-md-9'>
-					<div class='posttime pull-right'>
-						<?php echo date("h:i:sa d-m-Y"); ?>
-					</div>
-					<div class='profilelink'>
-						<a href='#'>Chew Sheen Yeen</a>
-					</div>
-						bla bla bla blabla bla bla blabla bla bla blabla bla bla blabla bla bla bla
-					<div class='postaction'>
-						<a href='#'><i class="fa fa-comments"></i> 5 Comments</a> | <a href='#'><i class="fa fa-mail-reply-all"></i> Reply</a>
-					</div>
-					<div class='replyform'>
-						
-						<form class='form-horizontal'>
-								
-							<div class="form-group">
-								<div class="col-sm-1 picframe2"><img class='replypic' src='<?php echo URL?>res/img/profilepic/4.jpg'/></div>
-								<div class="col-sm-10">
-									<input type='text' class='form-control'/>
-								</div>
-							</div>
-						</form>
-					</div>
-					</article>
-				</div>
+				
 				<div class='post'style='transition: opacity 0.5s ease 0.2s, background 0.2s;'>
 					<header>
 						<div class='picframe'>
@@ -224,7 +195,7 @@
 					</div>
 				</div>
 			  </div>
-			  <div class="tab-pane fade" id="profile">..qweqw.</div>
+			  <div class="tab-pane fade" id="profile"><h2><i class='fa fa-times-circle'></i> Under construction</h2></div>
 			</div>
 			
 		</div>

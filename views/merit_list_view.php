@@ -28,9 +28,11 @@
 	<div class="col-sm-12 col-md-12">
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="rankingtab"> 
+			<?php if($this->merits){ ?>
 			<div class='tabpane-control'>
 				<a href='<?php echo URL ?>merit/download' class='btn btn-primary btn-sm'><i class="fa fa-download"></i> Download</a>
 			</div>
+			<?php }?>
 			<table class="table table-bordered table-hover ">
 				<thead>
 					<tr>
@@ -40,13 +42,18 @@
 					</tr>
 				</thead>
 				<tbody>
+					<?php if($this->merits){ ?>
 					<?php foreach($this->merits as $m){ ?>
 					<tr>
 						<td><?php echo $m['name'] ?></td>
 						<td><?php echo $m['student_matric'] ?></td>
 						<td><?php echo $m['total'] ?></td>
 					</tr>
-					<?php } ?>
+					<?php }}else{ ?>
+					<tr>
+						<td colspan='3'>No result</td>
+					</tr>
+					<?php }?>
 				</tbody>
 			</table>
 		</div>

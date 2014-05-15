@@ -144,6 +144,17 @@ nav .panel-body{
 	
 }
 
+.link-disabled{
+	color:#aaa;
+	cursor:default;
+}
+
+.link-disabled:hover{
+	color:#aaa;
+	cursor:default;
+	text-decoration:none;
+}
+
 .loading { 
 	width: 34px; 
 	height: 34px; 

@@ -23,6 +23,7 @@ class Merit extends Controller {
     function all()
     {
 		$this->view->merits = $this->model->get_merit_list();
+		Log::d(sizeof($this->view->merits));
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit_list');
     }
@@ -114,7 +115,7 @@ class Merit extends Controller {
 			foreach ($lines as $line_number => $columms)
 			{
 				$matric = $columms[0];
-				if($this->model->validate_matric($matric))
+				if($this->model->validate_matric($matric) && !$this->model->check_participation($matric, $activity_id))
 				{
 					switch($type){
 						case('sukmum'):
@@ -175,7 +176,7 @@ class Merit extends Controller {
 			$this->resp_fail('Event does not exist');
 		
 		if($this->model->check_attendance($p['matric'], $e['id'], $p['sign']))
-			$this->resp_fail('You have signed for this event');
+			$this->resp_fail('You have already signed');
 		
 		if($p['sign'] == 'i')
 		{
@@ -210,11 +211,35 @@ class Merit extends Controller {
 	
 	function add()
 	{
-		sleep(1);
 		$participation = $this->validate_param('matric,merittypeid,id');
 		$activity_id = $participation['id'];
-		if($this->model->add_participation($participation['matric'], $participation['merittypeid'], $activity_id))
-			header("Location: ".URL."activity/sukmum?id=$activity_id");
+		if(!$this->model->check_participation($participation['matric'], $activity_id))
+			if($this->model->validate_matric($participation['matric']))
+				if($this->model->add_participation($participation['matric'], $participation['merittypeid'], $activity_id))
+					header("Location: ".URL."activity/sukmum?id=$activity_id");
+				else
+					$this->resp_fail('Internal error');
+			else
+				header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Matric number not found.");
+		else
+			header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Participation record already exist.");
+	}
+	
+	function remove($type = '')
+	{
+		$activityoreventid = -1;
+		$participation_id = -1;
+		if($type != ''){
+			$p = $this->validate_param('activityoreventid');
+			$activityoreventid = $p['activityoreventid'];
+		}
+		else{
+			$p = $this->validate_param('participationid');
+			$participation_id = $p['participationid'];
+		}
+		
+		if($this->model->remove_participants_of($activityoreventid, $participation_id))
+			$this->resp_success();
 		else
 			$this->resp_fail('Internal error');
 	}

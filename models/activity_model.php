@@ -52,7 +52,7 @@ class Activity_Model extends Model
 			for($i = 0; $i < sizeof($result); $i++)
 			{
 				$id = $result[$i]['id'];
-				$qry2 = "SELECT s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id";
+				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id";
 				$result2 = $this->select($qry2);
 				if($result2 && sizeof($result2) > 0)
 					$participants = $result2;
@@ -67,8 +67,9 @@ class Activity_Model extends Model
 	
 	public function delete_activity($id)
 	{
-		$qry = "DELETE FROM `activity` WHERE id = $id";
-		return $this->query($qry);
+		$qry = "UPDATE `activity` SET `status` = 'trashed' WHERE `id` = $id;";
+		$qry2 = "UPDATE `participation` set `status` = 'invalid' WHERE `activity_id` = $id";
+		return $this->query($qry) && $this->query($qry2);
 	}
 	
 	public function edit_activity($id, $name)
@@ -115,6 +116,15 @@ class Activity_Model extends Model
 	{
 		$status = ($signtype == 'i') ? 'signedin\' OR `status` = \'valid' : 'valid';
 		$qry = "SELECT * FROM `participation` WHERE `merit_event_id` = $eid AND `student_matric` = '$matric' AND (`status` = '$status')";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return true;
+		return false;
+	}
+	
+	public function check_participation($matric, $aid)
+	{
+		$qry = "SELECT * FROM `participation` WHERE `activity_id` = $aid AND `student_matric` = '$matric'";
 		$result = $this->select($qry);
 		if(sizeof($result) > 0)
 			return true;
@@ -192,8 +202,9 @@ class Activity_Model extends Model
 	
 	public function get_merit_list()
 	{
-		$qry = "SELECT s.name, p.student_matric, sum(mt.mark) as total FROM `participation` p INNER JOIN merit_type mt ON mt.id = p.merit_type_id INNER JOIN student s on s.matric = p.student_matric GROUP BY student_matric ORDER BY total desc";
+		$qry = "SELECT s.name, p.student_matric, sum(mt.mark) as total FROM `participation` p INNER JOIN merit_type mt ON mt.id = p.merit_type_id INNER JOIN student s on s.matric = p.student_matric WHERE p.status = 'valid' GROUP BY student_matric ORDER BY total desc";
 		$result = $this->select($qry);
+		Log::d("result: ".sizeof($result));
 		if(sizeof($result) > 0)
 			return $result;
 		return false;
@@ -215,6 +226,12 @@ class Activity_Model extends Model
 		if(sizeof($result) > 0)
 			return $result;
 		return false;
+	}
+	
+	public function remove_participants_of($activityorevent_id, $participation_id)
+	{
+		$qry = "DELETE FROM `participation` WHERE `activity_id` = $activityorevent_id OR `merit_event_id` = $activityorevent_id OR `id` = $participation_id";
+		return $this->query($qry);
 	}
 }
 

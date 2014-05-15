@@ -136,8 +136,9 @@ class App{
 class Log{
 	public function d($qry)
 	{
-		$lines = file('log.txt'); 
 		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now")).": $qry\r\n\n";
+		foreach(file('log.txt') as $l)
+			$lines[] = $l; 
 		$fp = fopen('log.txt', 'w'); 
 		fwrite($fp, implode('', $lines)); 
 		fclose($fp);

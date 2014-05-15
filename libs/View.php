@@ -41,6 +41,7 @@ class View {
 		$this->js[] = 'jquery-scrollto';//http://balupton.github.io/jquery-scrollto/
 		$this->js[] = 'responsive-calendar.min';//http://w3widgets.com/responsive-calendar/
 		$this->js[] = 'bootstrap.file-input';//http://gregpike.net/demos/bootstrap-file-input/demo.html
+		$this->js[] = 'base';
 		$this->css[] = 'bootstrap.min';
 		$this->css[] = 'bootstrap-theme.min';
 		$this->css[] = 'font-awesome.min';

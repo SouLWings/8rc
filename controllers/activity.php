@@ -49,6 +49,12 @@ class Activity extends Controller {
         }
     }
     
+    function guideline()
+    {
+        $this->view->title = 'Upload Guideline';
+        $this->view->render('guideline');
+	}
+	
     function project()
     {
 		$this->view->activitytype  = 'Projects';
