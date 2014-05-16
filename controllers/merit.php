@@ -23,7 +23,6 @@ class Merit extends Controller {
     function all()
     {
 		$this->view->merits = $this->model->get_merit_list();
-		Log::d(sizeof($this->view->merits));
         $this->view->title = 'Student\'s Merit';
         $this->view->render('merit_list');
     }
