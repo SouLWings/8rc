@@ -122,7 +122,7 @@ span.inline-edit.editable:hover{
 					<br/>
 					
 					<span class='col-xs-4'>Description </span>
-					<span class='col-xs-8 inline-edit'><?php echo 'ddddddd  dddd ' ?></span>
+					<span class='col-xs-8 inline-edit'><?php echo nl2br($this->maintenances[$i]['description']) ?></span>
 					<br/>
 					<br/>
 					<?php Log::d($this->maintenances[$i]['description']) ?>
