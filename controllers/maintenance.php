@@ -11,8 +11,7 @@ class Maintenance extends Controller {
 		if($this->has_privilege(4)){
 			$this->listing();
 		}
-		else 
-		if($this->has_privilege(1) || $this->has_privilege(3)){
+		else if($this->has_privilege(1) || $this->has_privilege(3)){
 			$this->report();
 		}
 		else{

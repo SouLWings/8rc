@@ -19,9 +19,8 @@
 			<?php } else {?>
 			<div class="col-sm-4 col-md-4 form-horizontal">
 				<div class="form-group">
-					<label class="col-sm-4 col-md-3 control-label">Search: </label>
-					<div class="col-sm-8 col-md-9">
-					  <input class="searchbox form-control" autofocus>
+					<div class="col-sm-12">
+					  <input class="searchbox form-control" placeholder='Search' autofocus>
 					</div>
 				</div>
 			</div>
@@ -88,9 +87,8 @@
 						<h2>Committee Member</h2>
 						<a href='#memberadd<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-plus-circle"></i> Add member</a> | 
 						<a href='#memberupload<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-upload"></i> Upload</a> | 
-						<?php if(sizeof($this->activities[$i]['participant']) > 0){ ?>
-						<a href='<?php echo URL?>merit/download/activity/<?php echo $this->activities[$i]['id']?>'> <i class="fa fa-download"></i> Download</a> | 
-						<?php } ?>
+						
+						<a href='<?php echo URL?>merit/download/activity/<?php echo $this->activities[$i]['id']?>' class='<?php if(sizeof($this->activities[$i]['participant']) <= 0) echo 'link-disabled'?>'> <i class="fa fa-download "></i> Download</a> | 
 						<a href='#memberclear<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-times-circle"></i> Remove All member</a>
 						<br/>
 						<br/>
@@ -330,6 +328,9 @@
 <script>
 $('.alert').hide();
 $(document).ready(function () {
+					$("link-disabled").click(function(e){
+						e.preventDefault();
+					});
 	$('.btnupload').change(function(event){
 		var exts = $(this).val().split('.');
 		var ext = exts[exts.length-1];
@@ -367,9 +368,6 @@ $(document).ready(function () {
 					$form.parent().parent().find('tbody').fadeOut();
 					$form.parent().parent().find('.fa-times-circle').click();
 					$form.parent().parent().find('.fa-download').parent().addClass("link-disabled");
-					$form.parent().parent().find('.fa-download').parent().click(function(e){
-						e.preventDefault();
-					});
 				}
 				else
 				{

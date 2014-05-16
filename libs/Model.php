@@ -18,7 +18,6 @@ class Model{
 	//return an associate array of all rows from the given query
 	public function select($qry)
 	{
-		Log::q($qry);
 		$rows = array();
 		if($result = $this->query($qry))
 		{

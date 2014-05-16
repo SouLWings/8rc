@@ -134,29 +134,30 @@ class App{
 }
 
 class Log{
-	public function d($qry)
+	public function d($msg)
 	{
-		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now")).": $qry\r\n\n";
-		foreach(file('log.txt') as $l)
+		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now")).": $msg\r\n\n";
+		$i = 0;
+		foreach(file('debug_log.txt') as $l){
 			$lines[] = $l; 
-		$fp = fopen('log.txt', 'w'); 
+			if($i++ == 28)
+				break;
+		}
+		$fp = fopen('debug_log.txt', 'w'); 
 		fwrite($fp, implode('', $lines)); 
 		fclose($fp);
 	}
-	public function q($qry)
+	public function q($msg)
 	{
-		$lines = file('query_log.sql'); 
-		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now"))."\r\n$qry\r\n\n";
-		$fp = fopen('query_log.sql', 'w'); 
-		$new = array();
-		if(sizeof($lines)>28)
-		{
-			for($i = sizeof($lines)-28; $i < sizeof($lines); $i++)
-				$new[] = $lines[$i];
-			fwrite($fp, implode('', $new)); 
+		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now"))."\r\n$msg\r\n\n";
+		$i = 0;
+		foreach(file('query_log.sql') as $l){
+			$lines[] = $l;
+			if($i++ == 24)
+				break;
 		}
-		else
-			fwrite($fp, implode('', $lines)); 
+		$fp = fopen('query_log.sql', 'w'); 
+		fwrite($fp, implode('', $lines)); 
 		fclose($fp);
 	}
 }

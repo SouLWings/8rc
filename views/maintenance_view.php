@@ -118,11 +118,11 @@ span.inline-edit.editable:hover{
 					<br/>
 					
 					<span class='col-xs-4'>Location </span>
-					<span class='col-xs-8' name='location'><?php echo $this->maintenances[$i]['location'] ?></span>
+					<span class='col-xs-8' name='location'><?php echo nl2br($this->maintenances[$i]['location']) ?></span>
 					<br/>
 					
 					<span class='col-xs-4'>Description </span>
-					<span class='col-xs-8 inline-edit'><?php echo $this->maintenances[$i]['description'] ?></span>
+					<span class='col-xs-8 inline-edit'><?php echo 'ddddddd  dddd ' ?></span>
 					<br/>
 					<br/>
 					<?php Log::d($this->maintenances[$i]['description']) ?>
@@ -136,7 +136,7 @@ span.inline-edit.editable:hover{
 					<br/>
 					
 					<span class='col-xs-4'>Maintenance description</span>
-					<span class='col-xs-8'><?php echo $this->maintenances[$i]['descdone'] ?></span>
+					<span class='col-xs-8'><?php echo nl2br($this->maintenances[$i]['descdone']) ?></span>
 					<br/>
 					
 				</div>
@@ -191,6 +191,11 @@ span.inline-edit.editable:hover{
 			$panel.find("span.inline-edit").addClass("editable");
 			$panel.find("span.inline-edit").prop("contenteditable", 'true');
 			$panel.find("span.inline-edit").focus();
+		});
+		
+		$("span.inline-edit").keydown(function(e){
+			if(e.keyCode == 13)
+				$(this).parent().parent().parent().find('.save').click();
 		});
 		
 		$('.save').click(function(){
