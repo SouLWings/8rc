@@ -160,32 +160,47 @@ class Merit extends Controller {
 	function attendance()
 	{
 		sleep(1);
-		//post: student matric, event qr, start/end
 		
+		//check post parameter: student matric, event qr
 		$p = $this->validate_param('matric,qr');
 		
+		//check whether matric exist
 		if(!$this->model->validate_matric($p['matric']))
 			$this->resp_fail('Matric number not found');
 		
+		//set the 'sign' to the first character of qr, either i or o
 		$p['sign'] = $p['qr'][0];
+		
+		//set the qr = 32 character, without the i or o infront
 		$p['qr'] = substr($p['qr'],1);
 		
+		//call to model to get the event details with the qr
 		$e = $this->model->get_event_by_qr($p['qr'], $p['sign']);
+		
+		//if the event not exist, fail
 		if(sizeof($e) <= 0)
 			$this->resp_fail('Event does not exist');
 		
+		//check if attendance already taken
 		if($this->model->check_attendance($p['matric'], $e['id'], $p['sign']))
 			$this->resp_fail('You have already signed');
 		
+		//every tests passed if reach here
+		//if qr is to sign in event
 		if($p['sign'] == 'i')
 		{
+			//add a record of attendance with the status "signed"
+			//a participation with status "signed" is not counted when displaying merit mark
 			if($this->model->add_attendance($p['matric'],$e['merittype_id'],$e['id']))
 				$this->resp_success();
 			else
 				$this->resp_fail('Internal server error');
 		}
+		//if qr is to sign out event
 		else if($p['sign'] == 'o')
 		{
+			//change the status of participation of the student to "signed"
+			//not sure whether scanning sign out without scanning sign in before this will cause a bug or not
 			if($this->model->validate_attendance($p['matric'],$e['id']))
 				$this->resp_success();
 			else

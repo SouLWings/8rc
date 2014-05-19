@@ -1,0 +1,67 @@
+<style>
+.tag{
+	height:30px;
+	width:30px;
+	color:white;
+	background:#967dbc;
+	border:1px solid #563d7c;
+	box-shadow: 0 0 10px 0 #563d7c;
+	position:absolute;
+	transition:-webkit-transform 700ms ease-in-out;
+	overflow:hidden;
+	text-align:center;
+	border-radius:15px;
+	cursor:pointer;
+}.guide {
+	
+	display:none;
+	font-weight:bolder;
+	padding: 8px;
+	position: absolute;
+	z-index: 9999;
+	max-width: 300px;
+	-webkit-box-shadow: 2px 2px 5px #444;
+	box-shadow: 2px 2px 5px #444;
+	opacity:0.8;
+	background:black;
+	color:white;
+	font-weight:bold;
+}
+
+</style>
+<h2>Classroom A, reader ID #10001</h2>
+<div style='position:relative;margin:0px;' id='mapcontainer'>
+<img src='classroom.jpg' height='532px' width='562px' style='margin-left:-24px'/>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+<script>
+function trackPosition(){
+	$.post('ajax-position.php', {readerID:'10001'},function(data,status){
+		for(var i = 0; i < data.length; i++) 
+		{
+			var tag = data[i];
+			if($('#'+tag.id).length > 0)
+			{
+				$('#'+tag.id).css('-webkit-transform', 'translate('+tag.x+'px, '+tag.y+'px)');
+			}else{
+				$('#mapcontainer').prepend("<div class='tag masterTooltip' id='" + tag.id + "' style='-webkit-transform: translate(-10px,420px);display:none' title='asd'>"+tag.id+"</div>");
+				$('#'+tag.id).hover(function(){
+					var title = $(this).attr('title');
+					$(this).data('tipText', title).removeAttr('title');
+					$('<div class="btn-default btn-small guide"></div>').html(title).appendTo('body').fadeIn('slow');
+				}, function() {
+					$(this).attr('title', $(this).data('tipText'));
+					$('.guide').remove();
+				}).mousemove(function(e) {
+						var mousex = e.pageX + 20; //Get X coordinates
+						var mousey = e.pageY + 0; //Get Y coordinates
+						$('.guide').css({ top: mousey, left: mousex })
+				});
+				$('#'+tag.id).fadeIn();
+			}
+		}
+	},'json');
+}
+setInterval(trackPosition,2000);
+
+</script>
