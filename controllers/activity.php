@@ -35,6 +35,9 @@ class Activity extends Controller {
     {
 		sleep(1);
 		$activity = $this->validate_param('type,name');
+		if($this->model->check_activit_exist($activity['name']))
+			$this->resp_fail('Activity already exist');
+		
 		switch ($activity['type']) {
             case 'sukmum':
                 if($this->model->add_activity($activity['name'],ACADEMIC_SESSION,$activity['type'],''))
@@ -81,7 +84,7 @@ class Activity extends Controller {
     function event()
     {
 		$this->view->activitytype = 'Event';
-		$this->view->events = $this->model->get_all_events();
+		$this->view->activities = $this->model->get_all_events();
         $this->view->title = 'Event';
         $this->view->render('event');
     }

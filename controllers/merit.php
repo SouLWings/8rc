@@ -10,7 +10,8 @@ class Merit extends Controller {
     {
 		if($this->has_privilege(3) || $this->has_privilege(4))
 		{
-			$this->all();
+			header("Location: merit/all");
+			//$this->all();
 		}
 		else
 		{
@@ -114,17 +115,23 @@ class Merit extends Controller {
 			foreach ($lines as $line_number => $columms)
 			{
 				$matric = $columms[0];
+				$merit_id = $this->model->get_merit_id($columms[1]);
+				//TO-DO check for participation type == activity type
 				if($this->model->validate_matric($matric) && !$this->model->check_participation($matric, $activity_id))
 				{
 					switch($type){
+						case('event'):
+							if(!$this->model->check_attendance($matric, $activity_id, 'i')){
+								$this->model->add_attendance($matric,$merit_id,$activity_id);
+								$this->model->validate_attendance($matric,$activity_id);
+							}
+							break;
+							
 						case('sukmum'):
-							if($merit_id = $this->model->get_merit_id('Sukmum participant'))
 							$this->model->add_participation($matric, $merit_id, $activity_id);
-							header("Location: ".URL."activity/sukmum?id=$activity_id");
 							break;
 							
 						case('feseni'):
-							$merit_id = $this->model->get_merit_id('Feseni participant');
 							$this->model->add_participation($matric, $merit_id, $activity_id);
 							header("Location: ".URL."activity/feseni");
 							break;
@@ -132,13 +139,13 @@ class Merit extends Controller {
 						case('mproject'):
 							$merit_id = $this->model->get_merit_id($columms[1], "(MEGA)");
 							$this->model->add_participation($matric, $merit_id, $activity_id);
-							header("Location: ".URL."activity/project");
+							$type = 'project';
 							break;
 							
 						case('nproject'):
 							$merit_id = $this->model->get_merit_id($columms[1]);
 							$this->model->add_participation($matric, $merit_id, $activity_id);
-							header("Location: ".URL."activity/project");
+							$type = 'project';
 							break;
 							
 						default:
@@ -147,14 +154,14 @@ class Merit extends Controller {
 				}
 				else
 				{
-					
+					echo 'merit exist or ';
 				}
 			}
+			header("Location: ".URL."activity/".$type."?id=$activity_id");
 		}
 		else
 			echo 'Incorrect type';
 			
-		// header("Location: page1.php");
     }
 	
 	function attendance()
@@ -192,19 +199,21 @@ class Merit extends Controller {
 			//add a record of attendance with the status "signed"
 			//a participation with status "signed" is not counted when displaying merit mark
 			if($this->model->add_attendance($p['matric'],$e['merittype_id'],$e['id']))
-				$this->resp_success();
+				$this->resp_success(array('event'=>$e));
 			else
 				$this->resp_fail('Internal server error');
 		}
 		//if qr is to sign out event
 		else if($p['sign'] == 'o')
 		{
-			//change the status of participation of the student to "signed"
-			//not sure whether scanning sign out without scanning sign in before this will cause a bug or not
-			if($this->model->validate_attendance($p['matric'],$e['id']))
-				$this->resp_success();
+			//change the status of participation of the student to "signed
+			if($this->model->check_attendance($p['matric'], $e['id'], 'i'))
+				if($this->model->validate_attendance($p['matric'],$e['id']))
+					$this->resp_success();
+				else
+					$this->resp_fail('Internal server error');
 			else
-				$this->resp_fail('Internal server error');
+				$this->resp_fail('You have not signed in');
 		}
 		else
 			$this->resp_fail('Incorrect parameter value');
@@ -223,20 +232,40 @@ class Merit extends Controller {
 			$this->resp_fail('Internal error');
 	}
 	
-	function add()
+	//not capable in handling 
+	function add($type = '')
 	{
 		$participation = $this->validate_param('matric,merittypeid,id');
 		$activity_id = $participation['id'];
-		if(!$this->model->check_participation($participation['matric'], $activity_id))
-			if($this->model->validate_matric($participation['matric']))
-				if($this->model->add_participation($participation['matric'], $participation['merittypeid'], $activity_id))
-					header("Location: ".URL."activity/sukmum?id=$activity_id");
+		if($type == 'event')
+		{
+			//need to check whether an record exist before
+			/*
+			if($this->model->validate_matric($participation['matric'])){
+				if($this->model->add_attendance($participation['matric'], $participation['merittypeid'], $activity_id))
+					if($this->model->validate_attendance($participation['matric'], $activity_id))
+						header("Location: ".URL."activity/event";
+					else
+						$this->resp_fail('Internal error 2');
 				else
-					$this->resp_fail('Internal error');
+					header("Location: ".URL."activity/event?id=$activity_id&msg=Internal error 1");
+			}
 			else
-				header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Matric number not found.");
+				header("Location: ".URL."activity/event?id=$activity_id&msg=Matric number not found.");*/
+		}
 		else
-			header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Participation record already exist.");
+		{
+			if(!$this->model->check_participation($participation['matric'], $activity_id))
+				if($this->model->validate_matric($participation['matric']))
+					if($this->model->add_participation($participation['matric'], $participation['merittypeid'], $activity_id))
+						header("Location: ".URL."activity/sukmum?id=$activity_id");
+					else
+						$this->resp_fail('Internal error');
+				else
+					header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Matric number not found.");
+			else
+				header("Location: ".URL."activity/sukmum?id=$activity_id&msg=Participation record already exist.");
+		}
 	}
 	
 	function remove($type = '')

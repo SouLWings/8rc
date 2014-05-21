@@ -25,12 +25,13 @@
 				</div>
 			</div>
 			<div class="col-sm-8 col-md-8 form-horizontal">
-				<button class='btn btn-info pull-right expandall'><i class='fa fa-search-plus'></i> Expand All</button>
+				<button class='btn btn-primary pull-right expandall'><i class='fa fa-search-plus'></i> Expand All</button>
 			</div>
-			<?php } ?>
+			<?php }  ?>
 			<div class='col-sm-12 col-md-12'>
+			<?php $delay = -1 ?>
 			<?php for($i = 0; $i < sizeof($this->activities); $i++){  if($this->activities[$i]['status']!='trashed'){?>
-			<div data-id='<?php echo $this->activities[$i]['id']?>' class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo $i*0.02;?>s'>
+			<div data-id='<?php echo $this->activities[$i]['id']?>' class="panel panel-info" style='transition: -webkit-transform 1s,width 0.2s, opacity 0.5s ease <?php echo ++$delay*0.02;?>s'>
 				<div class="panel-heading">
 				  <h4 class="panel-title text-right">
 					<a data-toggle="collapse" data-parent="#accordion" href="#activity<?php echo $i?>" class='pull-left'>
@@ -84,7 +85,7 @@
 				<div id="activity<?php echo $i?>" class="panel-collapse collapse">
 					<div class="panel-body table-responsive">
 						<?php echo $this->activities[$i]['description']?>
-						<h2>Committee Member</h2>
+						<h2>Committee Member (<?php echo sizeof($this->activities[$i]['participant'])?>)</h2>
 						<a href='#memberadd<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-plus-circle"></i> Add member</a> | 
 						<a href='#memberupload<?php echo $i?>' data-toggle="collapse"> <i class="fa fa-upload"></i> Upload</a> | 
 						
@@ -128,7 +129,7 @@
 								</div>
 							</form>
 						</div>
-						<table class="table table-bordered table-hover table-striped ">
+						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th>Name</th>
@@ -149,7 +150,7 @@
 									</td>
 								</tr>
 								<?php }}else{ ?>
-								<tr><td colspan='4'>No data found.</td></tr>
+								<tr><td>No data found.</td><td></td><td></td><td></td></tr>
 								<?php } ?>
 							</tbody>
 						</table>
@@ -192,7 +193,7 @@
 						<br/>
 						<br/>
 						<?php } ?>
-						<table class="table table-bordered table-hover table-striped ">
+						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
 									<th>Name</th>
@@ -297,8 +298,8 @@
 						<div class="alert alert-success col-md-8 col-md-offset-2">
 							<span class="alert-link"></span><i class='fa fa-info-circle'></i> Record added successfully!
 						</div>
-						<div class="alert alert-danger col-md-5 col-md-offset-4">
-							<span class="alert-link"></span> Failed to add record <span id='failmsg'></span>
+						<div class="alert alert-danger col-md-8 col-md-offset-2">
+							<span class="alert-link"></span><i class='fa fa-info-circle'></i> Failed to add record: <span id='failmsg'></span>
 						</div>
 					</div>
 				</fieldset>
@@ -320,17 +321,13 @@
 .maincontent .panel-info:hover .panel-heading{
 	background-image: linear-gradient(to bottom,#d1e6f4 0,#bbdaf3 100%);
 }
-
-.table{
-	margin-top: 10px;
-}
 </style>
 <script>
 $('.alert').hide();
 $(document).ready(function () {
-					$("link-disabled").click(function(e){
-						e.preventDefault();
-					});
+	$("link-disabled").click(function(e){
+		e.preventDefault();
+	});
 	$('.btnupload').change(function(event){
 		var exts = $(this).val().split('.');
 		var ext = exts[exts.length-1];
@@ -463,7 +460,9 @@ $(document).ready(function () {
 			{
 				if(data['status'] == 'success')
 				{
-					$form.find('.alert-success').show().delay(3000).fadeOut(2000);
+					if(url == 'edit')
+						$form.parent().parent().parent().find('.activityname').text($form.find('input[name=name]').val()+" 13/14");
+					$form.find('.alert-success').show().delay(1000).fadeOut(3000);
 				}
 				else
 				{
@@ -482,6 +481,12 @@ $(document).ready(function () {
 	});
 	//$('.alert-success').show();
 	
+	
+	
+	/* $('.activityname').each(function(){
+		//if($(this).hasClass('on'))
+			$(this).click();
+	}); */
 	<?php if(isset($_GET['id'])){ ?>
 	$('.panel[data-id=<?php echo $_GET['id'] ?>] .activityname').click();
 	$('.panel[data-id=<?php echo $_GET['id'] ?>]').ScrollTo({
@@ -490,4 +495,37 @@ $(document).ready(function () {
 	});
 	<?php } ?>
 });
+</script>
+<script>
+$.extend($.tablesorter.themes.bootstrap, {
+    // these classes are added to the table. To see other table classes available,
+    // look here: http://twitter.github.com/bootstrap/base-css.html#tables
+    table      : 'table table-bordered',
+    caption    : 'caption',
+    header     : 'bootstrap-header', // give the header a gradient background
+    footerRow  : '',
+    footerCells: '',
+    icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
+    sortNone   : 'bootstrap-icon-unsorted',
+    sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',     // includes classes for Bootstrap v2 & v3
+    sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down', // includes classes for Bootstrap v2 & v3
+    active     : '', // applied when column is sorted
+    hover      : '', // use custom css here - bootstrap class may not override it
+    filterRow  : '', // filter row class
+    even       : '', // odd row zebra striping
+    odd        : ''  // even row zebra striping
+});
+
+$('.table').tablesorter({
+	theme : "bootstrap",
+    widthFixed: true,
+    headerTemplate : '{content} {icon}',
+    widgets : [ "uitheme", "zebra" ],
+    widgetOptions : {
+      zebra : ["even", "odd"],
+	  filter_cssFilter     : 'form-control'
+    }
+});
+
+
 </script>

@@ -13,7 +13,7 @@
 
 .jumbotron{
   height:100%;
-  /* background-color:rgba(66, 139, 202,0.3); */
+  background-color:rgba(66, 139, 202,0.4);
  }
 .form-control{
 	border-radius:17px;

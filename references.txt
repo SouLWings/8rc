@@ -24,9 +24,10 @@ http://bootstrap-calendar.azurewebsites.net/index-bs3.html
 http://spyrestudios.com/40-websites-built-with-the-twitter-bootstrap-framework/
 
 bootstrap addons
+http://mottie.github.io/tablesorter/docs/example-widget-bootstrap-theme.html
 http://goodybag.github.io/bootstrap-notify/
 http://www.jquery4u.com/bootstraps/10-twitter-bootstrap-3-jquery-plugins/
-
+http://jschr.github.io/bootstrap-modal/bs3.html
 
 halstead site
 http://www.virtualmachinery.com/sidebar2.htm

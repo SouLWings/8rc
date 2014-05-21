@@ -119,7 +119,14 @@ nav .panel-body{
 	background-image: linear-gradient(to bottom,#5fcd66 0,#3fad46 100%);
 	border-color:#3fad46;
 	color:#ffffff;
-};
+}
+
+.alert-danger{
+	text-align:center;
+	background-image: linear-gradient(to bottom,#dd6f76 0,#bd4f56 100%);
+	border-color:#3fad46;
+	color:#ffffff;
+}
 /* bootstrap-file-input */
 .file-input-wrapper {
 	overflow: hidden;
@@ -143,7 +150,10 @@ nav .panel-body{
 	background-image: linear-gradient(to bottom,#eee 0,#ccc 100%);
 	
 }
-
+.modal-content {
+	/* background: linear-gradient(to bottom,#fff 0,#d7F5FF 100%); */
+	border-radius: 6px;
+}
 .link-disabled{
 	color:#aaa;
 	cursor:default;
@@ -153,6 +163,20 @@ nav .panel-body{
 	color:#aaa;
 	cursor:default;
 	text-decoration:none;
+}
+
+.table-bordered>thead>tr>th, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>tbody>tr>td, .table-bordered>tfoot>tr>td {
+border: 1px solid #cdf;
+}
+.table-bordered {
+border: 1px solid #cdf;
+}
+.table-hover td{
+	transition:all 0.2s;
+}
+
+.table{
+	margin-top: 10px;
 }
 
 .loading { 

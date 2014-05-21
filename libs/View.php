@@ -41,8 +41,12 @@ class View {
 		$this->js[] = 'jquery-scrollto';//http://balupton.github.io/jquery-scrollto/
 		$this->js[] = 'responsive-calendar.min';//http://w3widgets.com/responsive-calendar/
 		$this->js[] = 'bootstrap.file-input';//http://gregpike.net/demos/bootstrap-file-input/demo.html
+		$this->js[] = 'jquery.tablesorter.min';//https://github.com/Mottie/tablesorter
+		$this->js[] = 'jquery.tablesorter.widgets.min';
+		$this->js[] = 'jquery.tablesorter.pager.min';
 		$this->js[] = 'base';
 		$this->css[] = 'bootstrap.min';
+		$this->css[] = 'tablesortertheme.bootstrap';
 		$this->css[] = 'bootstrap-theme.min';
 		$this->css[] = 'font-awesome.min';
 		$this->css[] = 'font-fsecure';

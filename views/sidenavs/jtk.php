@@ -29,10 +29,11 @@
 		<div id="collapseS" class="panel-collapse collapse in">
 		  <div class="panel-body">
 			<ul class="nav">
+				<li><a class="text-danger" href="#"><i class="fa fa-key"></i> Room</a></li>
+				<li><a class="text-danger" href="#"><i class="fa fa-calendar"></i> Event</a></li>
+				<li><a class="text-danger" href="#"><i class="fa fa-ticket"></i> Merit</a></li>
 				<li><a href="<?php echo URL?>maintenance/report"><i class="fa fa-wrench"></i> Maintenance</a></li>
 				<li><a class="text-danger" href="#"><i class="fa fa-cutlery"></i> Food Order</a></li>
-				<li><a class="text-danger" href="#"><i class="fa fa-ticket"></i> Merit</a></li>
-				<li><a class="text-danger" href="#"><i class="fa fa-calendar"></i> Event</a></li>
 			</ul>
 		  </div>
 		</div>

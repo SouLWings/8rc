@@ -138,12 +138,12 @@ class Log{
 	{
 		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now")).": $msg\r\n\n";
 		$i = 0;
-		foreach(file('debug_log.txt') as $l){
+		foreach(file('log/debug_log.txt') as $l){
 			$lines[] = $l; 
 			if($i++ == 28)
 				break;
 		}
-		$fp = fopen('debug_log.txt', 'w'); 
+		$fp = fopen('log/debug_log.txt', 'w'); 
 		fwrite($fp, implode('', $lines)); 
 		fclose($fp);
 	}
@@ -151,12 +151,12 @@ class Log{
 	{
 		$lines[] = ''.date('Y-m-d g:i:sa', strtotime("now"))."\r\n$msg\r\n\n";
 		$i = 0;
-		foreach(file('query_log.sql') as $l){
+		foreach(file('log/query_log.sql') as $l){
 			$lines[] = $l;
 			if($i++ == 24)
 				break;
 		}
-		$fp = fopen('query_log.sql', 'w'); 
+		$fp = fopen('log/query_log.sql', 'w'); 
 		fwrite($fp, implode('', $lines)); 
 		fclose($fp);
 	}

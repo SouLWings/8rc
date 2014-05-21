@@ -7,6 +7,15 @@ class Activity_Model extends Model
         parent::__construct();
     }
 	
+	public function check_activit_exist($name)
+	{
+		$qry = "SELECT * FROM `activity` WHERE `name` = '$name'";
+		$result = $this->select($qry);
+		if(sizeof($result) > 0)
+			return true;
+		return false;
+	}
+	
 	public function add_activity($name,$session,$type,$desc)
 	{
 		$qry = "INSERT INTO `activity` VALUES('','$name','$session','$type','$desc',now(),'')";
@@ -94,7 +103,21 @@ class Activity_Model extends Model
 	{
 		$qry = "SELECT * FROM `merit_event` WHERE `session` = '".ACADEMIC_SESSION."'";
 		if($result = $this->select($qry))
+		{
+			for($i = 0; $i < sizeof($result); $i++)
+			{
+				$result[$i]['type'] = 'event';
+				$id = $result[$i]['id'];
+				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `merit_event_id` = $id";
+				$result2 = $this->select($qry2);
+				if($result2 && sizeof($result2) > 0)
+					$participants = $result2;
+				else
+					$participants = array();
+				$result[$i]['participant'] = $participants;
+			}
 			return $result;
+		}
 		return array();
 	}
 	
@@ -204,7 +227,6 @@ class Activity_Model extends Model
 	{
 		$qry = "SELECT s.name, p.student_matric, sum(mt.mark) as total FROM `participation` p INNER JOIN merit_type mt ON mt.id = p.merit_type_id INNER JOIN student s on s.matric = p.student_matric WHERE p.status = 'valid' GROUP BY student_matric ORDER BY total desc";
 		$result = $this->select($qry);
-		Log::d("result: ".sizeof($result));
 		if(sizeof($result) > 0)
 			return $result;
 		return false;
@@ -221,9 +243,9 @@ class Activity_Model extends Model
 	
 	public function get_involvement($matric)
 	{
-		$qry = "SELECT mt.mark as mark, mt.type as type, mt.name as position, COALESCE(a.name, me.name) as activityname FROM `participation` p INNER JOIN `merit_type` mt ON mt.id = p.merit_type_id LEFT JOIN `activity` a ON a.id = p.activity_id LEFT JOIN `merit_event` me ON me.id = p.Merit_event_id WHERE p.student_matric = '$matric' AND p.status = 'valid' AND p.session = '".ACADEMIC_SESSION."'";
+		$qry = "SELECT p.timecreate as date, mt.mark as mark, mt.type as type, mt.name as position, COALESCE(a.name, me.name) as activityname FROM `participation` p INNER JOIN `merit_type` mt ON mt.id = p.merit_type_id LEFT JOIN `activity` a ON a.id = p.activity_id LEFT JOIN `merit_event` me ON me.id = p.Merit_event_id WHERE p.student_matric = '$matric' AND p.status = 'valid' AND p.session = '".ACADEMIC_SESSION."' ORDER BY mt.mark desc";
 		$result = $this->select($qry);
-		if(sizeof($result) > 0)
+		if(sizeof($result) >= 0)
 			return $result;
 		return false;
 	}
