@@ -33,7 +33,7 @@ class User extends Controller {
 		if($user != false)
 		{
 			$_SESSION['user'] = $user;
-			header('Location:/8rc/');
+			header('Location:'.URL);
 			$this->resp_success(array('user' => $user));
 		}
 		else

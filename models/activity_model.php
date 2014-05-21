@@ -61,7 +61,7 @@ class Activity_Model extends Model
 			for($i = 0; $i < sizeof($result); $i++)
 			{
 				$id = $result[$i]['id'];
-				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id";
+				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `activity_id` = $id AND p.status = 'valid'";
 				$result2 = $this->select($qry2);
 				if($result2 && sizeof($result2) > 0)
 					$participants = $result2;
@@ -108,7 +108,7 @@ class Activity_Model extends Model
 			{
 				$result[$i]['type'] = 'event';
 				$id = $result[$i]['id'];
-				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `merit_event_id` = $id";
+				$qry2 = "SELECT p.id as id, s.matric as matric, s.name as name, mt.name as type FROM `participation` p INNER JOIN `student` s on s.matric = p.student_matric INNER JOIN `merit_type` mt on mt.id = p.merit_type_id WHERE `merit_event_id` = $id AND p.status = 'valid'";
 				$result2 = $this->select($qry2);
 				if($result2 && sizeof($result2) > 0)
 					$participants = $result2;
