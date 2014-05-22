@@ -25,7 +25,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="brand" href="#">
-					<img src='<?php echo URL ?>res/img/logo/kk8logo.png' style='max-height:40px;margin-right:10px;'/>Kinabalu Residential College
+					<img src='<?php echo URL ?>res/img/logo/KK8logo.png' style='max-height:40px;margin-right:10px;'/>Kinabalu Residential College
 				</a>
 			</div>
       </div>

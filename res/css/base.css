@@ -123,8 +123,8 @@ nav .panel-body{
 
 .alert-danger{
 	text-align:center;
-	background-image: linear-gradient(to bottom,#dd6f76 0,#bd4f56 100%);
-	border-color:#3fad46;
+	background-image: linear-gradient(to bottom,#d9534f 0,#c12e2a 100%);
+	border-color:#c1201a;
 	color:#ffffff;
 }
 /* bootstrap-file-input */

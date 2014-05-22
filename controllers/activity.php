@@ -25,6 +25,9 @@ class Activity extends Controller {
     {
 		sleep(1);
 		$activity = $this->validate_param('id,name');
+		if($this->model->check_activit_exist($activity['name']))
+			$this->resp_fail('Activity already exist');
+			
 		if($this->model->edit_activity($activity['id'], $activity['name']))
 			$this->resp_success();
 		else

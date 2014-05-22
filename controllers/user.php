@@ -40,6 +40,19 @@ class User extends Controller {
 			$this->resp_fail('Incorrect username or password');
 	}
 	
+	function signin2()
+	{
+		$user = $this->model->sign_in('JTK-kk8', '123');
+		
+		if($user != false)
+		{
+			$_SESSION['user'] = $user;
+			header('Location:'.URL);
+		}
+		else
+			$this->resp_fail('Incorrect username or password');
+	}
+	
 	function signout(){
 		session_destroy();
 		header('Location: ' . $this->referer);

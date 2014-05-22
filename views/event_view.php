@@ -31,25 +31,25 @@
 				<div class="panel-body table-responsive">
 					<div class='row'>
 					<div class='col-sm-12'>
-						Venue: <span class='inline_edit'><?php echo $this->activities[$i]['venue']?></span>
+						<b>Venue:</b> <span class='inline_edit'><?php echo $this->activities[$i]['venue']?></span>
 						<input value='<?php echo $this->activities[$i]['venue']?>' class='inline_edit form-control' style='display:none' />
 					</div>
 					</div>
 					<div class='row'>
 					<div class='col-sm-4'>
-						Date: <span class='inline_edit'><?php echo date('Y-m-d',strtotime($this->activities[$i]['starttime']));?></span>
+						<b>Date:</b> <span class='inline_edit'><?php echo date('Y-m-d',strtotime($this->activities[$i]['starttime']));?></span>
 						<input type='date' value='<?php echo date('Y-m-d',strtotime($this->activities[$i]['starttime']));?>' style='display:none' class='inline_edit form-control col-sm-3'/>
 					</div>
 					</div>
 					<div class='row'>
 					<div class='col-sm-4'>
-						Time: <span class='inline_edit'><?php echo date('h:ia',strtotime($this->activities[$i]['starttime']));?></span>
+						<b>Time:</b> <span class='inline_edit'><?php echo date('h:ia',strtotime($this->activities[$i]['starttime']));?></span>
 						<input type='time' value='<?php echo date('h:i:s',strtotime($this->activities[$i]['starttime']));?>' style='display:none' class='inline_edit form-control'/>
 					</div>
 					</div>
 					<div class='row'>
 					<div class='col-sm-12'>
-						Description: <span class='inline_edit'><?php echo $this->activities[$i]['description']?></span>
+						<b>Description:</b> <span class='inline_edit'><?php echo $this->activities[$i]['description']?></span>
 						<textarea rows='4' style='display:none' class='inline_edit form-control'><?php echo $this->activities[$i]['description']?></textarea>
 						<br/>
 						<br/>

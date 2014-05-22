@@ -4,7 +4,7 @@
 	</header>
 	<div class="col-sm-12 col-md-12">
 		<ul class="nav nav-tabs">
-		  <li class='active'><a href="sukmum">Ongoing <?php echo $this->activitytype?></a></li>
+		  <li class='active'><a href="sukmum">Current <?php echo $this->activitytype?></a></li>
 		  <li><a href="#pastsukmumtab" data-toggle="tab">Past <?php echo $this->activitytype?></a></li>
 		  <li><a href="#archivementtab" data-toggle="tab">Archivement</a></li>
 		  <li><a href="#newtab" data-toggle="tab">Create new</a></li>
@@ -64,7 +64,7 @@
 									<div>
 										<input type='hidden' value='<?php echo $this->activities[$i]['id']?>' name='id' />
 										<div class='col-md-2 col-md-offset-4'>
-										<input type='submit' class='btn btn-primary' value='Edit'/>
+										<input type='submit' class='btn btn-primary' value='Save'/>
 										<div class='loading pull-right' style='display:none'></div>
 										</div>
 										<div class='col-md-8'>
@@ -73,7 +73,7 @@
 											<span class="alert-link"></span> Record updated successfully!
 										</div>
 										<div class="alert alert-danger col-md-5 col-md-offset-6">
-											<span class="alert-link"></span> Failed to update record <span id='failmsg'></span>
+											<span class="alert-link"></span> Failed to update record: <span id='failmsg'></span>
 										</div>
 										</div>
 									</div>

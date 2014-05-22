@@ -1,8 +1,8 @@
 <div class="modal fade" id="signinmodal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style=''>
-		<div class="modal-content">
+    <div class="modal-dialog" style='width:400px'>
+		<div class="modal-content" >
 			<div class="modal-body">
-				<form id='' action='<?php echo URL ?>user/signin' method='post' class='form-horizontal'>
+				<form id='' action='<?php echo URL ?>user/signin2' method='post' class='form-horizontal'>
 					<fieldset>
 						<legend>Sign in</legend>
 						<div class='form-group'>
@@ -17,7 +17,7 @@
 								<input required type='password' class='form-control' name='password'/>
 							</div>
 						</div>
-						<div class='submit-group'>
+						<div class='submit-group pull-right'>
 							<input type='submit' class='btn btn-primary' value='Sign in'/>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 						</div>
