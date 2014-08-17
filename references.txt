@@ -3,6 +3,11 @@ http://charliepark.org/bootstrap_buttons/ - button styler
 http://www.css3factory.com/linear-gradients/  - linear gradient
 http://bootswatch.com/cerulean/ - bootstrap theme
 
+https://github.com/jh3y/-cs-spinner 
+http://janpaepke.github.io/ScrollMagic/
+http://codepen.io/iamvdo/pen/maJhu hover 
+http://jsfiddle.net/williamnewton/sSkLx/ hover
+http://codepen.io/lloydwheeler/details/nsEir carosel
 
 http://alexgorbatchev.com/SyntaxHighlighter/hosting.html - java highlihter
 
@@ -39,4 +44,44 @@ http://www.sitepoint.com/autoloading-and-the-psr-0-standard/
 php QR generator
 http://www.sitepoint.com/generate-qr-codes-in-php/
 
+freebies - imageg, font
+https://www.behance.net/
 
+3d flip effect
+http://codepen.io/syedrafeeq/pen/eCkFt
+
+WOW
+http://lab.hakim.se/meny/
+
+designer tutorial sites
+http://www.creativebloq.com/
+
+list scroll
+http://lab.hakim.se/scroll-effects/
+
+html presentation
+http://imakewebthings.com/deck.js/
+http://lab.hakim.se/reveal-js/#/
+http://bartaz.github.io/impress.js/
+
+
+css
+reflex
+-webkit-box-reflect: below 10px
+  -webkit-gradient(linear, left top, left bottom, 
+                   from(transparent), to(rgba(255, 255, 255, 0.1)));
+text-overflow: ellipsis;
+
+js selector
+var els = document.querySelectorAll("ul li:nth-child(odd)");
+
+
+Chrome Frame
+Minimal effort for bringing IE6, 7 and 8 up to the latest HTML5 technologies
+Two ways to get your websites ready for Chrome Frame:
+Client side:
+
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+Server side:
+
+X-UA-Compatible: chrome=1
